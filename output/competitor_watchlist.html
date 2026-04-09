@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heathrow BC — Competitor Watchlist</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0d0d0d; color: #f0f0f0; line-height: 1.6; padding: 0 0 60px; font-size: 14px; }
+
+  /* ─── Zoom Bar ─────────────────────────────────────────── */
+  .zoom-bar { position: sticky; top: 0; z-index: 200; background: #0d0d0d; border-bottom: 1px solid #1e1e1e; padding: 8px 16px; display: flex; align-items: center; gap: 8px; }
+  .zoom-bar span { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #444; margin-right: 4px; }
+  .zoom-btn { background: #1a1a1a; border: 1px solid #2a2a2a; color: #666; font-size: 11px; font-weight: 800; padding: 5px 14px; border-radius: 16px; cursor: pointer; transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
+  .zoom-btn:hover { border-color: #555; color: #aaa; }
+  .zoom-btn.active { background: rgba(230,54,0,0.12); border-color: #e63600; color: #e63600; }
+
+  /* ─── Header ────────────────────────────────────────────── */
+  .site-header { background: linear-gradient(160deg, #1a0a00 0%, #111 60%, #0d0d0d 100%); border-bottom: 2px solid #e63600; padding: 24px 20px 20px; text-align: center; }
+  .logo-wrap { width: 72px; height: 72px; border-radius: 50%; border: 3px solid #e63600; overflow: hidden; margin: 0 auto 12px; background: #1a1a1a; box-shadow: 0 0 24px rgba(230,54,0,0.25); }
+  .logo-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #444; text-decoration: none; margin-bottom: 14px; padding: 5px 12px; border: 1px solid #2a2a2a; border-radius: 20px; transition: color 0.15s, border-color 0.15s; }
+  .back-link:hover { color: #e63600; border-color: #e63600; }
+  .site-header .gym-name { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #e63600; margin-bottom: 4px; }
+  .site-header h1 { font-size: 22px; font-weight: 900; color: #fff; }
+  .site-header .meta { font-size: 12px; color: #444; margin-top: 6px; }
+
+  /* ─── Container ─────────────────────────────────────────── */
+  .container { max-width: 780px; margin: 0 auto; padding: 0 16px; }
+  .section-title { font-size: 10px; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: #444; margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #1a1a1a; }
+
+  /* ─── Landscape Map ─────────────────────────────────────── */
+  .landscape { background: #111; border: 1px solid #1e1e1e; border-radius: 14px; padding: 20px; margin-top: 24px; }
+  .landscape-title { font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: #555; margin-bottom: 18px; }
+  .landscape-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .quad { border-radius: 10px; padding: 14px; position: relative; }
+  .quad-label { font-size: 9px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px; }
+  .quad-threat { background: rgba(230,54,0,0.06); border: 1px solid rgba(230,54,0,0.15); }
+  .quad-threat .quad-label { color: #e63600; }
+  .quad-watch { background: rgba(255,167,38,0.06); border: 1px solid rgba(255,167,38,0.15); }
+  .quad-watch .quad-label { color: #ffa726; }
+  .quad-low { background: rgba(100,181,246,0.06); border: 1px solid rgba(100,181,246,0.1); }
+  .quad-low .quad-label { color: #64b5f6; }
+  .quad-you { background: rgba(230,54,0,0.1); border: 2px solid #e63600; }
+  .quad-you .quad-label { color: #e63600; }
+  .quad-gym-name { font-size: 13px; font-weight: 800; color: #fff; margin-bottom: 3px; }
+  .quad-stat { font-size: 11px; color: #777; line-height: 1.5; }
+  .quad-stat strong { color: #aaa; }
+  .you-badge { display: inline-block; font-size: 9px; font-weight: 800; background: #e63600; color: #fff; padding: 1px 6px; border-radius: 3px; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 6px; }
+  .axes { display: flex; justify-content: space-between; font-size: 9px; color: #333; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; }
+  .axis-label-top { text-align: center; font-size: 9px; color: #333; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+
+  /* ─── Competitor Cards ──────────────────────────────────── */
+  .comp-cards { display: flex; flex-direction: column; gap: 16px; margin-top: 8px; }
+  .comp-card { background: #141414; border: 1px solid #222; border-radius: 12px; overflow: hidden; }
+  .comp-card-header { padding: 14px 18px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-bottom: 1px solid #1e1e1e; }
+  .comp-name { font-size: 16px; font-weight: 900; color: #fff; }
+  .comp-location { font-size: 11px; color: #555; margin-top: 2px; }
+  .threat-badge { font-size: 9px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; flex-shrink: 0; align-self: flex-start; margin-top: 2px; }
+  .threat-high { background: rgba(230,54,0,0.2); border: 1px solid rgba(230,54,0,0.4); color: #e63600; }
+  .threat-med { background: rgba(255,167,38,0.2); border: 1px solid rgba(255,167,38,0.4); color: #ffa726; }
+  .threat-low { background: rgba(100,181,246,0.15); border: 1px solid rgba(100,181,246,0.3); color: #64b5f6; }
+  .comp-body { padding: 16px 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .comp-section-label { font-size: 9px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: #555; margin-bottom: 8px; }
+  .stat-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .stat-icon { font-size: 13px; flex-shrink: 0; width: 20px; text-align: center; }
+  .stat-val { font-size: 12px; }
+  .stat-val strong { color: #fff; font-weight: 800; }
+  .stat-val span { color: #666; }
+  .pill-list { display: flex; flex-wrap: wrap; gap: 5px; }
+  .pill { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: #1e1e1e; color: #888; border: 1px solid #2a2a2a; }
+  .pill-green { background: rgba(76,175,80,0.1); border-color: rgba(76,175,80,0.25); color: #81c784; }
+  .pill-red { background: rgba(230,54,0,0.08); border-color: rgba(230,54,0,0.2); color: #e67050; }
+  .pill-orange { background: rgba(255,167,38,0.1); border-color: rgba(255,167,38,0.2); color: #ffa726; }
+  .insight-box { grid-column: 1 / -1; background: #1a1a1a; border: 1px solid #252525; border-radius: 8px; padding: 12px 14px; font-size: 12px; color: #aaa; line-height: 1.6; }
+  .insight-box strong { color: #e63600; }
+
+  /* ─── Social Comparison Bar Chart ───────────────────────── */
+  .social-chart { background: #111; border: 1px solid #1e1e1e; border-radius: 12px; padding: 18px; margin-top: 8px; }
+  .chart-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .chart-row:last-child { margin-bottom: 0; }
+  .chart-gym { width: 140px; flex-shrink: 0; font-size: 12px; font-weight: 700; color: #ccc; }
+  .chart-bar-wrap { flex: 1; background: #1a1a1a; border-radius: 4px; height: 24px; overflow: hidden; position: relative; }
+  .chart-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; font-size: 11px; font-weight: 800; color: #fff; white-space: nowrap; transition: width 0.3s; }
+  .bar-you { background: linear-gradient(90deg, #e63600, #ff4a1a); }
+  .bar-high { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+  .bar-med { background: linear-gradient(90deg, #3a3a4a, #4a4a5a); }
+  .bar-low { background: linear-gradient(90deg, #1e1e2e, #2a2a3a); color: #555; }
+  .chart-num { width: 60px; flex-shrink: 0; font-size: 12px; font-weight: 800; color: #aaa; text-align: right; }
+
+  /* ─── Gap Analysis ──────────────────────────────────────── */
+  .gap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+  .gap-card { background: #141414; border: 1px solid #222; border-radius: 10px; padding: 14px; }
+  .gap-card h3 { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px; }
+  .gap-card.advantage h3 { color: #81c784; }
+  .gap-card.risk h3 { color: #e67050; }
+  .gap-item { font-size: 12px; color: #aaa; margin-bottom: 6px; display: flex; gap: 8px; }
+  .gap-item::before { flex-shrink: 0; font-weight: 800; }
+  .advantage .gap-item::before { content: "✓"; color: #81c784; }
+  .risk .gap-item::before { content: "⚠"; color: #ffa726; }
+
+  /* ─── Divider ─────────────────────────────────────────────── */
+  .divider { max-width: 780px; margin: 28px auto; border: none; border-top: 1px solid #1e1e1e; }
+
+  /* ─── Responsive ──────────────────────────────────────────── */
+  @media (max-width: 600px) {
+    .landscape-grid { grid-template-columns: 1fr; }
+    .comp-body { grid-template-columns: 1fr; }
+    .gap-grid { grid-template-columns: 1fr; }
+    .chart-gym { width: 110px; font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="zoom-bar">
+  <span>Text size</span>
+  <button class="zoom-btn active" id="zoom-1" onclick="setZoom(1)">A</button>
+  <button class="zoom-btn" id="zoom-2" onclick="setZoom(2)">A+</button>
+  <button class="zoom-btn" id="zoom-3" onclick="setZoom(3)">A++</button>
+</div>
+
+<header class="site-header">
+  <a class="back-link" href="../index.html">← Content Hub</a>
+  <div class="logo-wrap">
+    <img src="../resources/logo.png" alt="Heathrow Boxing Club" onerror="this.style.display='none';this.parentElement.innerHTML='🥊'">
+  </div>
+  <div class="gym-name">Heathrow Boxing Club</div>
+  <h1>Competitor Watchlist</h1>
+  <div class="meta">Researched: 2026-04-09 · West Drayton / Uxbridge / Hayes / Slough radius</div>
+</header>
+
+
+<div class="container">
+
+  <!-- ── COMPETITIVE LANDSCAPE ────────────────────────────── -->
+  <div class="section-title">Competitive Landscape</div>
+
+  <div class="landscape">
+    <div class="landscape-title">Threat Map — Boxing Social Media Reach vs. Geographic Proximity</div>
+    <div class="axis-label-top">↑ Higher social media reach</div>
+    <div class="landscape-grid">
+
+      <div class="quad quad-threat">
+        <div class="quad-label">🔴 High Threat</div>
+        <div class="quad-gym-name">Blackbeard Academy</div>
+        <div class="quad-stat"><strong>50K IG</strong> · Slough · Multi-discipline</div>
+      </div>
+
+      <div class="quad quad-you">
+        <div class="you-badge">YOU</div>
+        <div class="quad-gym-name">Heathrow Boxing Club</div>
+        <div class="quad-stat"><strong>~3K IG</strong> · West Drayton · Pure boxing</div>
+      </div>
+
+      <div class="quad quad-low">
+        <div class="quad-label">🔵 Low Threat</div>
+        <div class="quad-gym-name">Hayes Amateur BC</div>
+        <div class="quad-stat">Est. 1948 · Hayes · Minimal social presence</div>
+      </div>
+
+      <div class="quad quad-watch">
+        <div class="quad-label">🟡 Watch</div>
+        <div class="quad-gym-name">Uxbridge ABC</div>
+        <div class="quad-stat"><strong>1.5K IG</strong> · Uxbridge · England Boxing affiliate</div>
+      </div>
+
+    </div>
+    <div class="axes">
+      <span>← Farther away</span>
+      <span>↓ Lower social reach</span>
+      <span>Closer →</span>
+    </div>
+  </div>
+
+
+  <!-- ── SOCIAL MEDIA COMPARISON ───────────────────────────── -->
+  <div class="section-title">Instagram Follower Comparison</div>
+
+  <div class="social-chart">
+    <div class="chart-row">
+      <div class="chart-gym">Blackbeard Academy</div>
+      <div class="chart-bar-wrap"><div class="chart-bar bar-high" style="width:100%">@blackbeardmma</div></div>
+      <div class="chart-num">50,000</div>
+    </div>
+    <div class="chart-row">
+      <div class="chart-gym">Heathrow BC <span style="color:#e63600;font-size:9px;">YOU</span></div>
+      <div class="chart-bar-wrap"><div class="chart-bar bar-you" style="width:6%">@heathrowbc</div></div>
+      <div class="chart-num">~3,000</div>
+    </div>
+    <div class="chart-row">
+      <div class="chart-gym">Uxbridge ABC</div>
+      <div class="chart-bar-wrap"><div class="chart-bar bar-med" style="width:3%">@uxbabc</div></div>
+      <div class="chart-num">1,488</div>
+    </div>
+    <div class="chart-row">
+      <div class="chart-gym">Chosen Gym Hayes</div>
+      <div class="chart-bar-wrap"><div class="chart-bar bar-low" style="width:2%">unknown</div></div>
+      <div class="chart-num">—</div>
+    </div>
+    <div class="chart-row">
+      <div class="chart-gym">Hayes Amateur BC</div>
+      <div class="chart-bar-wrap"><div class="chart-bar bar-low" style="width:0.5%">—</div></div>
+      <div class="chart-num">&lt;200</div>
+    </div>
+  </div>
+
+
+  <!-- ── COMPETITOR CARDS ───────────────────────────────────── -->
+  <div class="section-title">Competitor Profiles</div>
+  <div class="comp-cards">
+
+    <!-- BLACKBEARD ACADEMY -->
+    <div class="comp-card">
+      <div class="comp-card-header">
+        <div>
+          <div class="comp-name">Blackbeard Academy</div>
+          <div class="comp-location">📍 Queensmere Observatory, Slough SL1 1LN · ~5.5 miles</div>
+        </div>
+        <span class="threat-badge threat-high">🔴 HIGH THREAT</span>
+      </div>
+      <div class="comp-body">
+        <div>
+          <div class="comp-section-label">Stats</div>
+          <div class="stat-row"><span class="stat-icon">📸</span><div class="stat-val"><strong>50,000</strong> <span>IG followers (@blackbeardmma)</span></div></div>
+          <div class="stat-row"><span class="stat-icon">🎯</span><div class="stat-val"><strong>MMA, BJJ, Boxing, Muay Thai</strong></div></div>
+          <div class="stat-row"><span class="stat-icon">📍</span><div class="stat-val"><strong>Shopping centre location</strong> <span>— free 2hr parking</span></div></div>
+          <div class="stat-row"><span class="stat-icon">💰</span><div class="stat-val"><strong>Pricing not public</strong> <span>— trial session required</span></div></div>
+          <div class="stat-row"><span class="stat-icon">🕐</span><div class="stat-val"><strong>Classes 7 days</strong> <span>— all ages</span></div></div>
+        </div>
+        <div>
+          <div class="comp-section-label">Their Strengths</div>
+          <div class="pill-list">
+            <span class="pill pill-red">50K Instagram</span>
+            <span class="pill pill-red">Viral social content</span>
+            <span class="pill pill-red">Multi-discipline</span>
+            <span class="pill pill-red">Women-only classes</span>
+            <span class="pill pill-red">State-of-art facility</span>
+            <span class="pill pill-red">Kids programs (age 4+)</span>
+            <span class="pill pill-red">Prominent location</span>
+          </div>
+          <br>
+          <div class="comp-section-label">Their Weaknesses</div>
+          <div class="pill-list">
+            <span class="pill pill-green">Boxing is secondary to MMA</span>
+            <span class="pill pill-green">Less authentic boxing culture</span>
+            <span class="pill pill-green">Slough — different catchment</span>
+            <span class="pill pill-green">No unique boxing identity</span>
+          </div>
+        </div>
+        <div class="insight-box">
+          <strong>Strategic insight:</strong> Blackbeard's 50K Instagram is the single biggest competitive gap in this market. They dominate online attention but they are NOT a boxing gym — they are an MMA gym that does boxing. Their follower base wants general martial arts content. Your audience wants boxing specifically. <strong>Don't try to compete on volume — win on specificity and boxing identity.</strong> Heathrow BC should own "Ukrainian boxing, West Drayton" so clearly that anyone searching for real boxing (not MMA classes) finds you first.
+        </div>
+      </div>
+    </div>
+
+    <!-- UXBRIDGE ABC -->
+    <div class="comp-card">
+      <div class="comp-card-header">
+        <div>
+          <div class="comp-name">Uxbridge Amateur Boxing Club</div>
+          <div class="comp-location">📍 The Unit Gym, Uxbridge · ~2 miles</div>
+        </div>
+        <span class="threat-badge threat-med">🟡 WATCH</span>
+      </div>
+      <div class="comp-body">
+        <div>
+          <div class="comp-section-label">Stats</div>
+          <div class="stat-row"><span class="stat-icon">📸</span><div class="stat-val"><strong>1,488</strong> <span>IG followers (@uxbabc)</span></div></div>
+          <div class="stat-row"><span class="stat-icon">👥</span><div class="stat-val"><strong>6,554</strong> <span>Facebook likes</span></div></div>
+          <div class="stat-row"><span class="stat-icon">💰</span><div class="stat-val"><strong>£45/mo</strong> <span>adult · £35/mo junior</span></div></div>
+          <div class="stat-row"><span class="stat-icon">🕐</span><div class="stat-val"><strong>2× per week</strong> <span>adult classes (1.5h)</span></div></div>
+          <div class="stat-row"><span class="stat-icon">🏆</span><div class="stat-val"><strong>England Boxing affiliated</strong> <span>— Level 2 coaches</span></div></div>
+        </div>
+        <div>
+          <div class="comp-section-label">Their Strengths</div>
+          <div class="pill-list">
+            <span class="pill pill-red">England Boxing affiliation</span>
+            <span class="pill pill-red">Competition pipeline</span>
+            <span class="pill pill-red">No joining/cancellation fees</span>
+            <span class="pill pill-red">Strong Facebook community</span>
+            <span class="pill pill-red">Gym facility included option</span>
+          </div>
+          <br>
+          <div class="comp-section-label">Their Weaknesses</div>
+          <div class="pill-list">
+            <span class="pill pill-green">Only 2× classes/week</span>
+            <span class="pill pill-green">Amateur/competitive focus</span>
+            <span class="pill pill-green">Less accessible to beginners</span>
+            <span class="pill pill-green">Weak Instagram (147 posts)</span>
+            <span class="pill pill-green">No unique style/identity</span>
+          </div>
+        </div>
+        <div class="insight-box">
+          <strong>Strategic insight:</strong> Uxbridge ABC is your closest pure-boxing competitor geographically. But they only offer 2 classes per week and are heavily competitive/amateur-focused — they are not targeting the same beginner/fitness audience you are. <strong>Their Facebook-heavy older demographic is exactly who you're not targeting on TikTok/IG.</strong> Opportunity: if someone searches "boxing Uxbridge" and sees their quiet Instagram vs. your active content, you win the click.
+        </div>
+      </div>
+    </div>
+
+    <!-- CHOSEN GYM HAYES -->
+    <div class="comp-card">
+      <div class="comp-card-header">
+        <div>
+          <div class="comp-name">Chosen Gym Hayes</div>
+          <div class="comp-location">📍 Beaconsfield Road, Hayes UB4 0SL · ~4.5 miles</div>
+        </div>
+        <span class="threat-badge threat-low">🔵 LOW THREAT</span>
+      </div>
+      <div class="comp-body">
+        <div>
+          <div class="comp-section-label">Stats</div>
+          <div class="stat-row"><span class="stat-icon">💰</span><div class="stat-val"><strong>£45–50/mo</strong> <span>rolling · £39.99 student</span></div></div>
+          <div class="stat-row"><span class="stat-icon">🕐</span><div class="stat-val"><strong>24/7 access</strong> <span>Hayes + Hounslow</span></div></div>
+          <div class="stat-row"><span class="stat-icon">🥊</span><div class="stat-val"><strong>Boxing included</strong> <span>in general membership</span></div></div>
+          <div class="stat-row"><span class="stat-icon">🏋️</span><div class="stat-val"><strong>Premium bodybuilding gym</strong> <span>— Hammer Strength etc.</span></div></div>
+        </div>
+        <div>
+          <div class="comp-section-label">Their Strengths</div>
+          <div class="pill-list">
+            <span class="pill pill-red">24/7 gym access</span>
+            <span class="pill pill-red">Premium equipment</span>
+            <span class="pill pill-red">Competitive pricing</span>
+            <span class="pill pill-red">Student discount</span>
+          </div>
+          <br>
+          <div class="comp-section-label">Their Weaknesses</div>
+          <div class="pill-list">
+            <span class="pill pill-green">Boxing is a side offering</span>
+            <span class="pill pill-green">No boxing-specific culture</span>
+            <span class="pill pill-green">No coaching depth</span>
+            <span class="pill pill-green">No competitive pathway</span>
+            <span class="pill pill-green">Hayes — different area</span>
+          </div>
+        </div>
+        <div class="insight-box">
+          <strong>Strategic insight:</strong> Chosen Gym targets gym-goers who want to add boxing sessions, not people who want to <em>learn boxing</em>. Their audience is already in a commercial gym mindset — same machines, same routine, different gym. <strong>This is exactly the person your "Stop going to the gym" content is targeting.</strong> Your messaging is already positioned perfectly against this competitor without naming them.
+        </div>
+      </div>
+    </div>
+
+    <!-- HAYES AMATEUR BC -->
+    <div class="comp-card">
+      <div class="comp-card-header">
+        <div>
+          <div class="comp-name">Hayes Amateur Boxing Club</div>
+          <div class="comp-location">📍 Near Hayes Stadium, Hayes · ~4 miles</div>
+        </div>
+        <span class="threat-badge threat-low">🔵 LOW THREAT</span>
+      </div>
+      <div class="comp-body">
+        <div>
+          <div class="comp-section-label">Stats</div>
+          <div class="stat-row"><span class="stat-icon">📸</span><div class="stat-val"><strong>&lt;200</strong> <span>estimated IG following</span></div></div>
+          <div class="stat-row"><span class="stat-icon">📅</span><div class="stat-val"><strong>Est. 1948</strong> <span>— Hillingdon institution</span></div></div>
+          <div class="stat-row"><span class="stat-icon">🏆</span><div class="stat-val"><strong>Traditional amateur club</strong> <span>— competition focused</span></div></div>
+        </div>
+        <div>
+          <div class="comp-section-label">Their Strengths</div>
+          <div class="pill-list">
+            <span class="pill pill-red">Deep community roots</span>
+            <span class="pill pill-red">Competitive history</span>
+            <span class="pill pill-red">Established local trust</span>
+          </div>
+          <br>
+          <div class="comp-section-label">Their Weaknesses</div>
+          <div class="pill-list">
+            <span class="pill pill-green">Near-zero social media</span>
+            <span class="pill pill-green">Not targeting beginners</span>
+            <span class="pill pill-green">Old school/traditional</span>
+            <span class="pill pill-green">No modern digital presence</span>
+          </div>
+        </div>
+        <div class="insight-box">
+          <strong>Strategic insight:</strong> Hayes ABC is not a social media competitor at all — they are invisible online. The people who train there found them through word of mouth or been there for years. <strong>No action needed here</strong> except monitoring if they ever build a digital presence.
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /comp-cards -->
+
+
+  <hr class="divider">
+
+
+  <!-- ── GAP ANALYSIS ─────────────────────────────────────── -->
+  <div class="section-title">Your Competitive Edge</div>
+
+  <div class="gap-grid">
+    <div class="gap-card advantage">
+      <h3>What Only You Have</h3>
+      <div class="gap-item">Ukrainian-style boxing — no competitor in this radius offers this as an identity or USP</div>
+      <div class="gap-item">The only gym positioning itself as both results-focused AND technically specific</div>
+      <div class="gap-item">Active social content strategy — everyone else is either silent or generic</div>
+      <div class="gap-item">Accessible to beginners AND serious fighters — wider audience than amateur-only clubs</div>
+      <div class="gap-item">West Drayton — geographically central to the Heathrow / Uxbridge / Hayes triangle</div>
+    </div>
+    <div class="gap-card risk">
+      <h3>Risks to Watch</h3>
+      <div class="gap-item">Blackbeard's 50K IG means they dominate local search impressions — counter with geo-specific content (#westdrayton, #uxbridge, #heathrow)</div>
+      <div class="gap-item">Uxbridge ABC has an England Boxing affiliation — if serious fighters compare, mention your competition pathway</div>
+      <div class="gap-item">Chosen Gym undercuts on price for casual boxing — your content must make "real boxing" feel categorically different from "gym boxing classes"</div>
+      <div class="gap-item">Any competitor could build a TikTok presence quickly — the window to dominate local boxing content is now, not in 6 months</div>
+    </div>
+  </div>
+
+
+</div><!-- /container -->
+
+
+<script>
+  function setZoom(level) {
+    const sizes = { 1: '14px', 2: '17px', 3: '21px' };
+    document.body.style.fontSize = sizes[level];
+    document.querySelectorAll('.zoom-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('zoom-' + level).classList.add('active');
+  }
+</script>
+
+</body>
+</html>

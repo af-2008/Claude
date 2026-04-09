@@ -31,13 +31,28 @@
   .tag-ig { background: #2d1f47; color: #c77dff; }
   .tag-tt { background: #1a2a2a; color: #69f0ae; }
   .tag-fb { background: #1a2540; color: #64b5f6; }
-  .tag-reel { background: #2a1e0f; color: #ffa726; }
-  .tag-carousel { background: #1e2a1e; color: #81c784; }
+  /* Format indicators — visually distinct from platform tags */
+  .format-pill { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; padding: 2px 9px; border-radius: 4px; border: 1px dashed #444; color: #999; background: transparent; }
+  /* Zoom controls */
+  .zoom-bar { position: sticky; top: 0; z-index: 200; background: #0d0d0d; border-bottom: 1px solid #1e1e1e; padding: 8px 16px; display: flex; align-items: center; gap: 8px; }
+  .zoom-bar span { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #444; margin-right: 4px; }
+  .zoom-btn { background: #1a1a1a; border: 1px solid #2a2a2a; color: #666; font-size: 11px; font-weight: 800; padding: 5px 14px; border-radius: 16px; cursor: pointer; transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
+  .zoom-btn:hover { border-color: #555; color: #aaa; }
+  .zoom-btn.active { background: rgba(230,54,0,0.12); border-color: #e63600; color: #e63600; }
+  /* Post time badge */
+  .time-badge-box { display: inline-flex; align-items: center; gap: 6px; background: rgba(230,54,0,0.1); border: 1px solid rgba(230,54,0,0.25); border-radius: 8px; padding: 5px 12px; }
+  .time-badge-box .clock-icon { font-size: 13px; }
+  .time-badge-box .time-text { font-size: 13px; font-weight: 800; color: #e63600; letter-spacing: 0.3px; }
+  /* CapCut guide box */
+  .capcut-box { background: #0d0d1f; border: 1px solid #1e1e3a; border-left: 3px solid #6c63ff; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #c5c0f0; margin-top: 6px; }
+  .capcut-box ol { padding-left: 18px; margin-top: 6px; }
+  .capcut-box li { margin-bottom: 5px; line-height: 1.5; }
+  .capcut-box .capcut-note { font-size: 11px; color: #555; margin-top: 8px; font-style: italic; }
   .day-section { max-width: 780px; margin: 36px auto 0; padding: 0 16px; }
   .day-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #222; flex-wrap: wrap; }
   .day-label { font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: #e63600; background: rgba(230,54,0,0.08); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(230,54,0,0.2); }
   .day-title { font-size: 18px; font-weight: 800; color: #fff; }
-  .day-time { margin-left: auto; font-size: 12px; color: #555; white-space: nowrap; }
+  .day-time { margin-left: auto; white-space: nowrap; }
   .post-card { background: #141414; border: 1px solid #222; border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
   .post-card-header { background: #1a1a1a; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
   .post-card-header .post-name { font-size: 15px; font-weight: 800; color: #fff; }
@@ -96,6 +111,13 @@
 </head>
 <body>
 
+<div class="zoom-bar">
+  <span>Text size</span>
+  <button class="zoom-btn active" id="zoom-1" onclick="setZoom(1)">A</button>
+  <button class="zoom-btn" id="zoom-2" onclick="setZoom(2)">A+</button>
+  <button class="zoom-btn" id="zoom-3" onclick="setZoom(3)">A++</button>
+</div>
+
 <header class="site-header">
   <a class="back-link" href="../index.html">← Content Hub</a>
   <div class="logo-wrap">
@@ -118,7 +140,7 @@
       <tr>
         <td><span class="day">Mon 13</span></td>
         <td><div class="post-title">Boxing vs Gym for Fat Loss</div><div class="post-subtitle">Reel — Controversy / Pattern Interrupt</div></td>
-        <td><div class="tags"><span class="tag tag-ig">IG</span><span class="tag tag-tt">TikTok</span><span class="tag tag-reel">Reel</span></div></td>
+        <td><div class="tags"><span class="tag tag-ig">IG</span><span class="tag tag-tt">TikTok</span><span class="format-pill">📹 Reel</span></div></td>
         <td><span class="time-badge">6:30pm</span></td>
       </tr>
       <tr>
@@ -130,7 +152,7 @@
       <tr>
         <td><span class="day">Wed 15</span></td>
         <td><div class="post-title">5 Mistakes Beginners Make</div><div class="post-subtitle">Reel — Educational / Social Proof</div></td>
-        <td><div class="tags"><span class="tag tag-ig">IG</span><span class="tag tag-tt">TikTok</span><span class="tag tag-fb">Facebook</span><span class="tag tag-reel">Reel</span></div></td>
+        <td><div class="tags"><span class="tag tag-ig">IG</span><span class="tag tag-tt">TikTok</span><span class="tag tag-fb">Facebook</span><span class="format-pill">📹 Reel</span></div></td>
         <td><span class="time-badge">7:00pm</span></td>
       </tr>
       <tr>
@@ -140,13 +162,13 @@
       <tr>
         <td><span class="day">Fri 17</span></td>
         <td><div class="post-title">Day in the Life at Heathrow BC</div><div class="post-subtitle">Reel — POV / Identity</div></td>
-        <td><div class="tags"><span class="tag tag-ig">IG</span><span class="tag tag-tt">TikTok</span><span class="tag tag-reel">Reel</span></div></td>
+        <td><div class="tags"><span class="tag tag-ig">IG</span><span class="tag tag-tt">TikTok</span><span class="format-pill">📹 Reel</span></div></td>
         <td><span class="time-badge">6:30pm</span></td>
       </tr>
       <tr>
         <td><span class="day">Sat 18</span></td>
         <td><div class="post-title">Ukrainian Boxing Technique</div><div class="post-subtitle">Reel — Technical / Curiosity Gap</div></td>
-        <td><div class="tags"><span class="tag tag-ig">IG</span><span class="tag tag-fb">Facebook</span><span class="tag tag-reel">Reel</span></div></td>
+        <td><div class="tags"><span class="tag tag-ig">IG</span><span class="tag tag-fb">Facebook</span><span class="format-pill">📹 Reel</span></div></td>
         <td><span class="time-badge">10:00am</span></td>
       </tr>
       <tr>
@@ -166,13 +188,13 @@
   <div class="day-header">
     <span class="day-label">Mon · Apr 13</span>
     <h2 class="day-title">Boxing vs Gym for Fat Loss</h2>
-    <span class="day-time">Post at 6:30pm UK</span>
+    <div class="day-time"><div class="time-badge-box"><span class="clock-icon">🕐</span><span class="time-text">Post at 6:30pm UK</span></div></div>
   </div>
 
   <div class="post-card">
     <div class="post-card-header">
       <span class="post-name">Boxing vs Gym for Fat Loss</span>
-      <div class="tags"><span class="tag tag-ig">Instagram</span><span class="tag tag-tt">TikTok</span><span class="tag tag-reel">Reel 30–45s</span></div>
+      <div class="tags"><span class="tag tag-ig">Instagram</span><span class="tag tag-tt">TikTok</span><span class="format-pill">📹 Reel 30–45s</span></div>
     </div>
     <div class="post-card-body">
 
@@ -188,6 +210,18 @@
             <li>End of session — members catching breath, smiling (5 sec)</li>
           </ol>
           Film vertical 9:16. Hand-held is fine. Keep natural gym audio.
+        </div>
+        <div class="capcut-box">
+          <strong style="color:#8b83ff;">✂️ CapCut Edit (iPhone · Free Plan) — Controversy Montage</strong>
+          <ol>
+            <li><strong>Template:</strong> Build manually — don't use a template here. Controversy content needs to feel raw and direct, not polished. Templates read as "created" rather than captured.</li>
+            <li><strong>Filter:</strong> "Teal &amp; Orange" LUT (under Filters → Film category) at 70% intensity. This is the dominant cinematic grading trend in gym/boxing content in 2026 — cool shadows, warm skin/glove tones. Makes the footage look like a proper training doc, not a phone video.</li>
+            <li><strong>Effects:</strong> Apply "Camera Shake" (under Effects → Basic) at 15% intensity on the bag hit clips only — adds handheld energy without making it unwatchable. Add a "White Flash" transition (2 frames, no longer) between each clip cut — synced to the beat drop. This is the dominant cut-sync technique in fast-paced gym content right now.</li>
+            <li><strong>Text:</strong> "STOP GOING TO THE GYM" — white bold text, no background box needed (white reads on dark gym footage). Use "Pop" animation (Animate → In). Centre frame, 0:00–1.5s. Delete it before the first cut hits so it doesn't crowd the visuals.</li>
+            <li><strong>Speed:</strong> Skipping/burpees clips: set to 1.3× (slightly sped up = more energy). The clean pad combination: Optical Flow slow-mo at 0.5×. Optical Flow (under Speed → Curve) creates smooth slow-mo that iPhone footage handles well — avoid "Normal Slow" which looks choppy.</li>
+            <li><strong>Audio:</strong> Use "TAKA LA DENTRO" by Mc GW &amp; SEKIMANE — currently the highest-reach electronic track on TikTok globally (6B+ views), trending in UK. Strong beat drop at ~2–3s matches perfectly with the controversy hook format. Turn on <strong>Beat Sync</strong> (Auto) — CapCut will align your cuts to the beat automatically. Set your gym audio track at 5% volume underneath as texture.</li>
+          </ol>
+          <div class="capcut-note">Export: 1080×1920 · 30fps · HD. The White Flash effect is only visible in exported video, not the CapCut preview — always check the export before posting.</div>
         </div>
       </div>
 
@@ -220,7 +254,7 @@ At Heathrow Boxing Club in West Drayton, we get complete beginners fit while tea
 
 Summer is 8 weeks away. Make those 8 weeks count.
 
-<span class="cta-line">DM us "TRAIN" to book your first class — first session is on us. 🔥</span>
+<span class="cta-line">DM us "TRAIN" to book your first class. 🔥</span>
 
 <span class="hashtags">#boxing #boxingtraining #boxingfitness #boxingworkout #boxingclub #padwork #hittingpads #boxinglife #boxingcommunity #weightloss #fatburn #fitness #getfit #transformation #gymmotivation #westdrayton #uxbridge #hayes #hillingdon #westlondon #londonboxing #londongyms #reels #reelsinstagram #fyp #gymreels #boxingtok</span></div>
         <div class="filming-note-small">Cover frame: pad round — catch a clean combination mid-swing</div>
@@ -238,7 +272,7 @@ Summer is 8 weeks away. Make those 8 weeks count.
 
       <div class="section">
         <div class="section-label">🎯 CTA</div>
-        <span class="cta-pill">DM "TRAIN" to book first class free</span>
+        <span class="cta-pill">DM "TRAIN" to book</span>
       </div>
 
       <button class="ua-toggle" onclick="toggleUA(this)">
@@ -262,7 +296,7 @@ Summer is 8 weeks away. Make those 8 weeks count.
 
 До літа залишилось 8 тижнів. Зроби їх корисними.
 
-<span class="cta-line">Напиши нам "TRAIN" і запишись на перше безкоштовне заняття. 🔥</span>
+<span class="cta-line">Напиши нам "TRAIN" і запишись на перше заняття. 🔥</span>
 
 #boxing #boxingtraining #боксклуб #бокс #westdrayton #uxbridge #londonboxing #westlondon #fatburn #weightloss</div>
         </div>
@@ -289,13 +323,13 @@ Summer is 8 weeks away. Make those 8 weeks count.
   <div class="day-header">
     <span class="day-label">Tue · Apr 14</span>
     <h2 class="day-title">Summer is 8 Weeks Away</h2>
-    <span class="day-time">Post at 6:00pm UK</span>
+    <div class="day-time"><div class="time-badge-box"><span class="clock-icon">🕐</span><span class="time-text">Post at 6:00pm UK</span></div></div>
   </div>
 
   <div class="post-card">
     <div class="post-card-header">
       <span class="post-name">Summer is 8 Weeks Away — Start Now</span>
-      <div class="tags"><span class="tag tag-ig">Instagram</span><span class="tag tag-carousel">Carousel · 5 slides</span></div>
+      <div class="tags"><span class="tag tag-ig">Instagram</span><span class="format-pill">🖼 Carousel · 5 slides</span></div>
     </div>
     <div class="post-card-body">
 
@@ -311,6 +345,18 @@ Summer is 8 weeks away. Make those 8 weeks count.
           </ol>
           Use Instagram's built-in carousel editor or Canva: dark overlay on each photo, large white bold text overlay. Consistent style across all 5 slides.
         </div>
+        <div class="capcut-box">
+          <strong style="color:#8b83ff;">✂️ CapCut Edit (iPhone · Free Plan) — Carousel as a Reel Option</strong>
+          <ol>
+            <li><strong>Note:</strong> Carousels post natively in Instagram — no video edit needed. But if you want to post this as a Reel instead (higher reach potential), build it in CapCut as a slideshow. Search "2026 Memories" in CapCut's <strong>Templates</strong> tab — this template is designed for milestone/transformation slideshow content and is currently trending for aspirational fitness storytelling.</li>
+            <li><strong>Filter:</strong> "Moody" or "Film 1" (under Filters → Film). Both lean cool and dark — matches the #transformation and summer urgency tone. Avoid warm filters here; cool tones read as more "serious" for body goals content.</li>
+            <li><strong>Transitions:</strong> "Swipe" between slides — 0.8s duration. Clean and modern. Avoid the "Glitch" or "Zoom" transitions here; this is emotional/aspirational content, not hype content. Swipe = sophistication.</li>
+            <li><strong>Text:</strong> Each slide's headline text — white bold, Fade In animation (0.3s). Keep text at the bottom third so the training photos are fully visible. Don't add animated text effects; static bold text is the dominant style in transformation content in 2026.</li>
+            <li><strong>Speed:</strong> 1.2–1.5 seconds per slide. If auto-syncing to music, let CapCut set the slide duration. Don't rush — let people read the text.</li>
+            <li><strong>Audio:</strong> "Rein Me In" by Sam Fender ft. Olivia Dean — currently trending for storytelling, coach/business narratives, and personal transformation posts. The emotional build of the track matches the "8 weeks until summer" urgency arc perfectly. Add at 80% volume.</li>
+          </ol>
+          <div class="capcut-note">For the carousel version (static): use Canva on iPhone — select "Instagram Post" template, dark background, white Montserrat Bold text. Far easier than CapCut for static slide design.</div>
+        </div>
       </div>
 
       <div class="section">
@@ -321,7 +367,7 @@ Summer is 8 weeks away. Make those 8 weeks count.
             <li><strong style="color:#fff">Slide 2:</strong> Pad/bag action · Text: "The gym didn't work last year." · Subtext: "Same machines. Same boredom. Same results."</li>
             <li><strong style="color:#fff">Slide 3:</strong> Coach + member · Text: "Boxing is different." · Subtext: "Every session is a challenge. Every week you're better."</li>
             <li><strong style="color:#fff">Slide 4:</strong> After-session energy · Text: "Real boxing. Real results." · Subtext: "Heathrow Boxing Club — West Drayton"</li>
-            <li><strong style="color:#fff">Slide 5 (CTA):</strong> Dark background · Text: "First class free." · Subtext: "DM us 'SUMMER' to book yours."</li>
+            <li><strong style="color:#fff">Slide 5 (CTA):</strong> Dark background · Text: "Ready to start?" · Subtext: "DM us 'SUMMER' to book your first class."</li>
           </ol>
         </div>
       </div>
@@ -339,14 +385,14 @@ At Heathrow Boxing Club in West Drayton, we take complete beginners and teach th
 
 Eight weeks is enough.
 
-<span class="cta-line">DM us "SUMMER" to claim your free first class. 🥊</span>
+<span class="cta-line">DM us "SUMMER" to book your first class. 🥊</span>
 
 <span class="hashtags">#boxing #boxingfitness #boxingworkout #transformation #weightloss #getfit #fitness #gymmotivation #fitnessmotivation #bodygoals #westdrayton #uxbridge #hayes #westlondon #londonboxing #reels #explore</span></div>
       </div>
 
       <div class="section">
         <div class="section-label">🎯 CTA</div>
-        <span class="cta-pill">DM "SUMMER" to book first class free</span>
+        <span class="cta-pill">DM "SUMMER" to book</span>
       </div>
 
       <button class="ua-toggle" onclick="toggleUA(this)">
@@ -360,7 +406,7 @@ Eight weeks is enough.
 Слайд 2: "Зал минулого року не спрацював." / "Ті самі тренажери. Та сама нудьга. Ті самі результати."
 Слайд 3: "Бокс — це інакше." / "Кожне заняття — виклик. Щотижня ти стаєш кращим."
 Слайд 4: "Справжній бокс. Справжній результат." / "Heathrow Boxing Club — Вест-Дрейтон"
-Слайд 5: "Перше заняття — безкоштовно." / "Напиши нам 'SUMMER' і запишись."</div>
+Слайд 5: "Готовий почати?" / "Напиши нам 'SUMMER' і запишись на перше заняття."</div>
         </div>
         <div class="ua-section">
           <div class="ua-label">Instagram підпис</div>
@@ -374,7 +420,7 @@ Eight weeks is enough.
 
 Восьми тижнів достатньо.
 
-<span class="cta-line">Напиши нам "SUMMER" і отримай перше безкоштовне заняття. 🥊</span></div>
+<span class="cta-line">Напиши нам "SUMMER" і запишись на перше заняття. 🥊</span></div>
         </div>
       </div>
 
@@ -391,13 +437,13 @@ Eight weeks is enough.
   <div class="day-header">
     <span class="day-label">Wed · Apr 15</span>
     <h2 class="day-title">5 Mistakes Beginners Make</h2>
-    <span class="day-time">Post at 7:00pm UK</span>
+    <div class="day-time"><div class="time-badge-box"><span class="clock-icon">🕐</span><span class="time-text">Post at 7:00pm UK</span></div></div>
   </div>
 
   <div class="post-card">
     <div class="post-card-header">
       <span class="post-name">5 Mistakes Beginners Make in Their First Boxing Class</span>
-      <div class="tags"><span class="tag tag-ig">Instagram</span><span class="tag tag-tt">TikTok</span><span class="tag tag-fb">Facebook</span><span class="tag tag-reel">Reel 30–45s</span></div>
+      <div class="tags"><span class="tag tag-ig">Instagram</span><span class="tag tag-tt">TikTok</span><span class="tag tag-fb">Facebook</span><span class="format-pill">📹 Reel 30–45s</span></div>
     </div>
     <div class="post-card-body">
 
@@ -413,6 +459,19 @@ Eight weeks is enough.
             <li>Swinging too hard too early (wild, looping haymaker)</li>
           </ol>
           Film from waist up. Keep the energy light — the goal is relatability, not criticism.
+        </div>
+        <div class="capcut-box">
+          <strong style="color:#8b83ff;">✂️ CapCut Edit (iPhone · Free Plan) — Educational List Reel</strong>
+          <ol>
+            <li><strong>Template:</strong> No template — build manually. List-format educational content needs precise timing control. Templates will auto-cut in the wrong places and ruin the numbered sequence.</li>
+            <li><strong>Filter:</strong> "Bright" filter (under Filters → Tone) at 80% — or no filter at all. Clean, well-lit, readable. The "5 Mistakes" format is about clarity and relatability, not cinematic mood. A dark moody filter on comedy/educational content kills the tone.</li>
+            <li><strong>Auto Captions:</strong> Turn ON (under Text → Auto Captions). Set style to white text, black outline, bottom third. This is the biggest trend in educational boxing/fitness content in 2026 — auto-captions keep viewers watching even on mute. Edit any errors in the caption editor.</li>
+            <li><strong>Text overlays:</strong> Add numbered labels "1." through "5." — use "Typewriter" animation (Animate → In), white bold text, bottom-left corner. Each number appears 0.5s before the corresponding clip starts. This is the signature visual format for list Reels in 2026.</li>
+            <li><strong>Effects:</strong> "Chromatic Aberration" (under Effects → Distort) — apply for 2 frames (keep it very brief) at each cut between mistakes. This acts as a visual separator that says "next item" without needing a transition. It's a trending micro-effect in boxing/martial arts content and should be subtle, not the "full glitch" version.</li>
+            <li><strong>Speed:</strong> Keep everything at 1× — the humour and relatability only land if people can clearly see each mistake being demonstrated. One exception: the haymaker swing at mistake 5 — add 0.3s of Optical Flow slow-mo at the peak of the swing. That's the money moment.</li>
+            <li><strong>Audio:</strong> "Mystery Girl" by Housecall — currently trending for tutorials and behind-the-scenes content. The light, slightly quirky instrumental energy matches this post's tone perfectly (self-deprecating humour, coaching). Set to 75% volume so the coach's voice or gym audio is still audible underneath.</li>
+          </ol>
+          <div class="capcut-note">This is your highest-comment post of the week — people will tag friends who make these exact mistakes. The Chromatic Aberration effect is only 2 frames: if it flickers more than once per cut it's too long. Use the frame-by-frame scrubber to check.</div>
         </div>
       </div>
 
@@ -451,7 +510,7 @@ The good news? Every one of these is fixed in the first few sessions. You don't 
 
 At Heathrow Boxing Club in West Drayton, we see these every week — and we love it. It means someone new is learning real boxing for the first time.
 
-<span class="cta-line">First class free. DM us "TRAIN" and come see which ones you do. 👊</span>
+<span class="cta-line">DM us "TRAIN" and come see which ones you do. 👊</span>
 
 <span class="hashtags">#boxing #boxingclass #boxingtraining #boxingcoach #boxingclub #boxingfitness #amateurboxing #boxingdrills #boxingskills #padwork #fitness #getfit #gymmotivation #martialarts #selfdefence #westdrayton #uxbridge #hayes #hillingdon #londonboxing #westlondon #londongyms #reels #reelsinstagram #fyp #viral #boxingtok #gymtok</span></div>
         <div class="filming-note-small">Cover frame: the swinging haymaker — most visually funny, best scroll-stopper</div>
@@ -482,14 +541,14 @@ And you know what? That's completely normal. We see it every week and we love it
 
 At Heathrow Boxing Club in West Drayton, we've helped complete beginners go from nervous first-timers to confident boxers. Whatever your age, background, or fitness level — you'll fit in here.
 
-<span class="cta-line">First class is free. Message us or drop in — we're in West Drayton, open 7 days. 📍</span>
+<span class="cta-line">Message us or drop in — we're in West Drayton, open 7 days. 📍</span>
 
 #boxing #boxingclub #westdrayton #uxbridge #londonboxing</div>
       </div>
 
       <div class="section">
         <div class="section-label">🎯 CTA</div>
-        <span class="cta-pill">DM "TRAIN" — first class free</span>
+        <span class="cta-pill">DM "TRAIN" to book</span>
       </div>
 
       <button class="ua-toggle" onclick="toggleUA(this)">
@@ -519,7 +578,7 @@ At Heathrow Boxing Club in West Drayton, we've helped complete beginners go from
 
 У Heathrow Boxing Club у Вест-Дрейтоні ми бачимо це щотижня — і раді цьому. Бо це означає, що хтось вперше вчиться справжньому боксу.
 
-<span class="cta-line">Перше заняття безкоштовно. Напиши нам "TRAIN" і приходь перевірити, які помилки робиш ти. 👊</span></div>
+<span class="cta-line">Напиши нам "TRAIN" і приходь перевірити, які помилки робиш ти. 👊</span></div>
         </div>
         <div class="ua-section">
           <div class="ua-label">TikTok підпис</div>
@@ -539,7 +598,7 @@ At Heathrow Boxing Club in West Drayton, we've helped complete beginners go from
 
 У Heathrow Boxing Club у Вест-Дрейтоні ми допомогли сотням новачків пройти шлях від нервових першопрохідців до впевнених боксерів. Незалежно від віку, досвіду чи рівня фізичної підготовки — тут тобі знайдеться місце.
 
-<span class="cta-line">Перше заняття безкоштовно. Напишіть нам або приходьте — ми у Вест-Дрейтоні, відкриті 7 днів на тиждень. 📍</span></div>
+<span class="cta-line">Напишіть нам або приходьте — ми у Вест-Дрейтоні, відкриті 7 днів на тиждень. 📍</span></div>
         </div>
         <div class="ua-section">
           <div class="ua-label">Текстовий оверлей (0:00–0:02)</div>
@@ -560,13 +619,13 @@ At Heathrow Boxing Club in West Drayton, we've helped complete beginners go from
   <div class="day-header">
     <span class="day-label">Fri · Apr 17</span>
     <h2 class="day-title">Day in the Life at Heathrow BC</h2>
-    <span class="day-time">Post at 6:30pm UK</span>
+    <div class="day-time"><div class="time-badge-box"><span class="clock-icon">🕐</span><span class="time-text">Post at 6:30pm UK</span></div></div>
   </div>
 
   <div class="post-card">
     <div class="post-card-header">
       <span class="post-name">Day in the Life at Heathrow Boxing Club</span>
-      <div class="tags"><span class="tag tag-ig">Instagram</span><span class="tag tag-tt">TikTok</span><span class="tag tag-reel">Reel 30–45s</span></div>
+      <div class="tags"><span class="tag tag-ig">Instagram</span><span class="tag tag-tt">TikTok</span><span class="format-pill">📹 Reel 30–45s</span></div>
     </div>
     <div class="post-card-body">
 
@@ -584,6 +643,18 @@ At Heathrow Boxing Club in West Drayton, we've helped complete beginners go from
             <li>End of session — members talking, smiling, catching breath</li>
           </ol>
           Film vertical, hand-held is fine. Add a punchy trending track in editing.
+        </div>
+        <div class="capcut-box">
+          <strong style="color:#8b83ff;">✂️ CapCut Edit (iPhone · Free Plan) — Day in the Life / POV Reel</strong>
+          <ol>
+            <li><strong>Template:</strong> Open CapCut → tap <strong>Templates</strong> → search "Just Like the Wind". This is a trending dynamic motion template in 2026 built for lifestyle/day-in-the-life montages — it handles multi-clip fast cuts with built-in timing and transitions. Alternatively search "gym vlog" in templates and pick the highest-view result with matching energy.</li>
+            <li><strong>Filter:</strong> "Seoul" (under Filters → Film) at 80% intensity. Seoul gives a warm, slightly faded cinematic look — dominant in community/lifestyle boxing content in 2026. It makes people look warmer and more human, which is exactly what you want for a "come join our community" post. The warmth of the filter is the difference between "cool gym I watch" and "gym I want to train at."</li>
+            <li><strong>Effects:</strong> "Whip Pan" transition between each scene change (e.g. wrapping hands → pad work → bag work). In CapCut: go to Transitions, select "Blur Right" — this mimics a whip pan. Keep at 0.3s per transition. Apply "Edge Glow" effect (Effects → Atmosphere) at 25% opacity on the opening clip (wrapping hands) only — adds a slightly elevated, aspirational quality to the intro moment.</li>
+            <li><strong>Text:</strong> "A day at a real boxing gym 🥊" — white bold text, top frame, Typewriter animation, appears at 0:00 and fades at 0:02. Nothing else. Let the footage carry the rest. Adding more text kills the cinematic feel of the Seoul filter.</li>
+            <li><strong>Speed:</strong> Use the Curve speed tool (not simple speed ×). Set: arrival clip → 0.8× (slightly slow, draws people in). Pad work/bag work → 1.2×. Final community clip → 0.7× slow. This speed ramp pattern is the trending "emotional arc" structure in 2026 day-in-the-life Reels — slow start, energetic middle, slow emotional end.</li>
+            <li><strong>Audio:</strong> This is your highest-priority post for trending audio. Option A: "Kiss It Better" by Rihanna — currently trending for POV and aesthetic content, works perfectly with the Seoul filter and slow-motion end shot. Option B: Check TikTok's "Trending" sounds tab on Friday April 17 (the day of posting) and pick the top sound in the Sports/Fitness category — using audio on its upswing gives your post a significant FYP boost. Set Beat Sync ON and let CapCut time your cuts to the track.</li>
+          </ol>
+          <div class="capcut-note">The J-Cut technique: in CapCut, offset your first audio clip so it starts 1 second before your first visual clip begins. This is an advanced editing trick that makes the video feel like it was professionally produced — the audio "pulls" you into the first image rather than the two hitting at exactly the same time.</div>
         </div>
       </div>
 
@@ -614,7 +685,7 @@ Hands wrapped. Gloves on. Every round is earned.
 
 We're a real boxing gym in West Drayton — Ukrainian-style technique, proper coaches, people who take the sport seriously. Whether you're coming to get fit, learn to fight, or just try something completely different — you'll leave a different person.
 
-Come train with us. First class is free.
+Come train with us.
 
 <span class="cta-line">DM us "GYM" or drop in — West Drayton, open 7 days. 👊</span>
 
@@ -634,7 +705,7 @@ Come train with us. First class is free.
 
       <div class="section">
         <div class="section-label">🎯 CTA</div>
-        <span class="cta-pill">DM "GYM" — first class free</span>
+        <span class="cta-pill">DM "GYM" to book</span>
       </div>
 
       <button class="ua-toggle" onclick="toggleUA(this)">
@@ -656,7 +727,7 @@ Come train with us. First class is free.
 
 Ми — справжній боксерський клуб у Вест-Дрейтоні: техніка в українському стилі, грамотні тренери, люди, які серйозно ставляться до спорту. Неважливо, чи ти прийшов за формою, навчитися битися, чи просто спробувати щось зовсім нове — ти підеш іншою людиною.
 
-Приходь тренуватися. Перше заняття безкоштовно.
+Приходь тренуватися.
 
 <span class="cta-line">Напиши нам "GYM" або просто заходь — Вест-Дрейтон, відкриті 7 днів. 👊</span></div>
         </div>
@@ -683,13 +754,13 @@ Come train with us. First class is free.
   <div class="day-header">
     <span class="day-label">Sat · Apr 18</span>
     <h2 class="day-title">Ukrainian Boxing Technique</h2>
-    <span class="day-time">Post at 10:00am UK</span>
+    <div class="day-time"><div class="time-badge-box"><span class="clock-icon">🕐</span><span class="time-text">Post at 10:00am UK</span></div></div>
   </div>
 
   <div class="post-card">
     <div class="post-card-header">
       <span class="post-name">Ukrainian Boxing Technique Breakdown</span>
-      <div class="tags"><span class="tag tag-ig">Instagram</span><span class="tag tag-fb">Facebook</span><span class="tag tag-reel">Reel 30–45s</span></div>
+      <div class="tags"><span class="tag tag-ig">Instagram</span><span class="tag tag-fb">Facebook</span><span class="format-pill">📹 Reel 30–45s</span></div>
     </div>
     <div class="post-card-body">
 
@@ -702,6 +773,18 @@ Come train with us. First class is free.
             <li><strong>Pad round demo (Part 2):</strong> Film the technique applied live — close-up on the guard position, then pull out for the full combination. 15–20 seconds of footage.</li>
           </ol>
           Edit: coach talking first → cut to live demo. Simple cut, no graphics needed.
+        </div>
+        <div class="capcut-box">
+          <strong style="color:#8b83ff;">✂️ CapCut Edit (iPhone · Free Plan) — Technical Breakdown Reel</strong>
+          <ol>
+            <li><strong>Template:</strong> No template. Coach-to-camera content must feel direct and unproduced — templates impose visual rhythms that fight against the authority of a straight-to-lens coaching delivery. Build manually for full control.</li>
+            <li><strong>Filter:</strong> "Film 2" or "Teal &amp; Orange" LUT (Filters → Film) at 60% intensity. Cooler tones = more authoritative and technical. This is the visual language of credible coaching content. Avoid warm filters (Seoul, Tokyo) here — those say "community vibes", not "technical expertise."</li>
+            <li><strong>Effects:</strong> "Zoom In" effect (Effects → Basic) on the moment the coach shows the guard position — the camera pushes in slightly on the key teaching moment, directing the viewer's eye. Apply "Halation" pass (Effects → Light) at 20% opacity on the pad work section only — this creates anamorphic-style light bleed on the gloves and pads, making the action shots look cinematic and athletic without heavy production.</li>
+            <li><strong>Text:</strong> Opening title: "MOST GYMS TEACH THIS." — white bold, static (no animation). Hold 1 second. Hard cut to: "WE DON'T." — same style, 1 second. Then Auto Captions for the coach's explanation (turn on under Text → Auto Captions, style: white text, black outline). Static text reads as more authoritative for educational content — animation says "entertaining", no animation says "I know what I'm talking about."</li>
+            <li><strong>Speed:</strong> Coach explanation: 1× (do not speed up or slow down — authenticity requires natural delivery). Pad combo section: Optical Flow speed ramp — 0.5× as the guard is set → 1.2× through the punch combination → 0.7× as the final defensive position is held. This "slow-fast-slow" curve on technique demonstrations is a proven trending format in boxing/martial arts content that gets high save rates (people save to rewatch the technique).</li>
+            <li><strong>Audio:</strong> No background music during the coach-to-camera section — use original audio only. This is intentional. Viewers watching technique breakdowns on mute are already engaged; music competes with the authority of the spoken coaching. Once the pad round demo starts, bring in "Mystery Girl" by Housecall at 15% volume as ambient texture — low enough not to distract, present enough to give the action footage energy. Apply J-Cut: bring the audio in 1 second before the visual cut to the pad work.</li>
+          </ol>
+          <div class="capcut-note">High save-rate post: technical breakdowns consistently get saved for later rewatching. The Optical Flow speed ramp on the technique demo is what drives saves — people slow-scrub through it. Make sure the guard position is clearly framed before the punch combination fires. Cover frame: the guard setup shot, not the punch.</div>
         </div>
       </div>
 
@@ -734,7 +817,7 @@ Ukrainian-style boxing builds defensive structure first — a tight shell, movem
 
 That's what we teach at Heathrow Boxing Club. Real technique, properly coached.
 
-Curious? Come see it in person — first class is free.
+Curious? Come see it in person.
 
 <span class="cta-line">DM us "TECHNIQUE" to book. 🥊</span>
 
@@ -755,14 +838,14 @@ It's not flashy. It's disciplined, technical, and genuinely effective — which 
 
 If you're serious about learning real boxing in West Drayton, come in and try a class. We take complete beginners through to fighters preparing for bouts.
 
-<span class="cta-line">First class is always free. Message us or come down — open 7 days. 📍 Heathrow Boxing Club, West Drayton</span>
+<span class="cta-line">Message us or come down — open 7 days. 📍 Heathrow Boxing Club, West Drayton</span>
 
 #boxing #ukrainianboxing #boxingclub #westdrayton #uxbridge</div>
       </div>
 
       <div class="section">
         <div class="section-label">🎯 CTA</div>
-        <span class="cta-pill">DM "TECHNIQUE" — first class free</span>
+        <span class="cta-pill">DM "TECHNIQUE" to book</span>
       </div>
 
       <button class="ua-toggle" onclick="toggleUA(this)">
@@ -786,7 +869,7 @@ If you're serious about learning real boxing in West Drayton, come in and try a 
 
 Саме це ми викладаємо в Heathrow Boxing Club. Справжня техніка, грамотно поставлена.
 
-Цікаво? Приходь подивитися особисто — перше заняття безкоштовно.
+Цікаво? Приходь подивитися особисто.
 
 <span class="cta-line">Напиши нам "TECHNIQUE" і запишись. 🥊</span></div>
         </div>
@@ -802,7 +885,7 @@ If you're serious about learning real boxing in West Drayton, come in and try a 
 
 Якщо ти серйозно хочеш навчитися справжньому боксу у Вест-Дрейтоні — приходь на пробне заняття. Ми приймаємо як повних новачків, так і тих, хто готується до боїв.
 
-<span class="cta-line">Перше заняття завжди безкоштовно. Напишіть або приходьте — відкриті 7 днів. 📍 Heathrow Boxing Club, Вест-Дрейтон</span></div>
+<span class="cta-line">Напишіть або приходьте — відкриті 7 днів. 📍 Heathrow Boxing Club, Вест-Дрейтон</span></div>
         </div>
         <div class="ua-section">
           <div class="ua-label">Текстовий оверлей</div>
@@ -859,6 +942,12 @@ If you're serious about learning real boxing in West Drayton, come in and try a 
     btn.classList.toggle('open');
     const block = btn.nextElementSibling;
     block.classList.toggle('visible');
+  }
+  function setZoom(level) {
+    const sizes = { 1: '14px', 2: '17px', 3: '21px' };
+    document.body.style.fontSize = sizes[level];
+    document.querySelectorAll('.zoom-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('zoom-' + level).classList.add('active');
   }
 </script>
 </body>

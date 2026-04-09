@@ -119,7 +119,11 @@ For reference/editing purposes, also save a `.md` version with the same name.
 
 **After saving any new HTML output file:** add a new `<a class="card">` entry to `index.html` in the correct section (Calendars / Reel Ideas / Captions / Performance). This keeps the Content Hub up to date with clickable links to every generated file.
 
-**Hosting:** The workspace is designed to be hosted on GitHub Pages. Once set up, the Content Hub URL is `https://[username].github.io/[repo-name]/` and each output file has its own URL at `https://[username].github.io/[repo-name]/output/[filename].html`.
+**Hosting:** GitHub Pages — live at:
+- Content Hub: `https://af-2008.github.io/Claude/`
+- Output files: `https://af-2008.github.io/Claude/output/[filename].html`
+
+After generating new content and updating `index.html`, remind the user to open GitHub Desktop → Commit → Push to make it live.
 
 ---
 
