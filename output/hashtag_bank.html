@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heathrow BC — Hashtag Bank</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #0d0d0d; color: #f0f0f0; line-height: 1.6; padding: 0 0 60px; }
+
+  .site-header { background: linear-gradient(160deg, #1a0a00 0%, #111 60%, #0d0d0d 100%); border-bottom: 2px solid #e63600; padding: 24px 20px 20px; text-align: center; }
+  .logo-wrap { width: 72px; height: 72px; border-radius: 50%; border: 3px solid #e63600; overflow: hidden; margin: 0 auto 12px; background: #1a1a1a; box-shadow: 0 0 24px rgba(230,54,0,0.25); }
+  .logo-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #444; text-decoration: none; margin-bottom: 14px; padding: 5px 12px; border: 1px solid #2a2a2a; border-radius: 20px; transition: color 0.15s, border-color 0.15s; }
+  .back-link:hover { color: #e63600; border-color: #e63600; }
+  .site-header .gym-name { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #e63600; margin-bottom: 4px; }
+  .site-header h1 { font-size: 22px; font-weight: 900; color: #fff; }
+  .site-header .meta { font-size: 12px; color: #444; margin-top: 6px; }
+
+  .container { max-width: 780px; margin: 0 auto; padding: 0 16px; }
+
+  /* ─── Platform Tabs ───────────────────────────────────── */
+  .tabs { display: flex; gap: 6px; margin: 24px 0 20px; flex-wrap: wrap; }
+  .tab { background: #1a1a1a; border: 1px solid #2a2a2a; color: #666; font-size: 12px; font-weight: 800; padding: 8px 18px; border-radius: 20px; cursor: pointer; font-family: inherit; transition: all 0.15s; letter-spacing: 0.3px; -webkit-tap-highlight-color: transparent; }
+  .tab:hover { border-color: #555; color: #ccc; }
+  .tab.active-ig { background: rgba(199,125,255,0.12); border-color: #c77dff; color: #c77dff; }
+  .tab.active-tt { background: rgba(105,240,174,0.12); border-color: #69f0ae; color: #69f0ae; }
+  .tab.active-fb { background: rgba(100,181,246,0.12); border-color: #64b5f6; color: #64b5f6; }
+  .tab.active-yt { background: rgba(255,82,82,0.12); border-color: #ff5252; color: #ff5252; }
+
+  /* ─── Platform panels ─────────────────────────────────── */
+  .platform-panel { display: none; }
+  .platform-panel.visible { display: block; }
+
+  /* ─── Usage rules banner ──────────────────────────────── */
+  .rules-banner { background: #141414; border: 1px solid #222; border-radius: 10px; padding: 14px 16px; font-size: 13px; color: #888; margin-bottom: 20px; line-height: 1.6; }
+  .rules-banner strong { color: #fff; }
+
+  /* ─── Section title ───────────────────────────────────── */
+  .section-title { font-size: 10px; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: #444; margin: 24px 0 12px; padding-bottom: 8px; border-bottom: 1px solid #1a1a1a; }
+
+  /* ─── Hashtag set card ────────────────────────────────── */
+  .set-card { background: #141414; border: 1px solid #222; border-radius: 12px; overflow: hidden; margin-bottom: 14px; }
+  .set-header { background: #1a1a1a; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .set-name { font-size: 14px; font-weight: 800; color: #fff; }
+  .set-count { font-size: 11px; color: #555; }
+  .copy-btn { background: rgba(230,54,0,0.12); border: 1px solid rgba(230,54,0,0.25); color: #e63600; font-size: 11px; font-weight: 800; padding: 5px 14px; border-radius: 12px; cursor: pointer; font-family: inherit; transition: all 0.15s; white-space: nowrap; -webkit-tap-highlight-color: transparent; }
+  .copy-btn:hover { background: rgba(230,54,0,0.2); }
+  .copy-btn.copied { background: rgba(105,240,174,0.12); border-color: #69f0ae; color: #69f0ae; }
+  .set-body { padding: 14px 16px; }
+  .hashtag-cloud { display: flex; flex-wrap: wrap; gap: 6px; }
+  .htag { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 6px; }
+  .htag-t1 { background: rgba(230,54,0,0.08); color: #e67050; border: 1px solid rgba(230,54,0,0.15); }
+  .htag-t2 { background: rgba(255,167,38,0.08); color: #ffa726; border: 1px solid rgba(255,167,38,0.15); }
+  .htag-t3 { background: rgba(100,181,246,0.08); color: #64b5f6; border: 1px solid rgba(100,181,246,0.15); }
+  .htag-t4 { background: rgba(199,125,255,0.08); color: #c77dff; border: 1px solid rgba(199,125,255,0.15); }
+  .htag-season { background: rgba(105,240,174,0.08); color: #69f0ae; border: 1px solid rgba(105,240,174,0.15); }
+  .set-raw { display: none; font-size: 0; }
+
+  /* ─── Tier legend ─────────────────────────────────────── */
+  .legend { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #666; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+  @media (max-width: 480px) {
+    .set-header { flex-direction: column; align-items: flex-start; }
+    .copy-btn { align-self: flex-end; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="back-link" href="../index.html">← Content Hub</a>
+  <div class="logo-wrap">
+    <img src="../resources/logo.png" alt="Heathrow Boxing Club" onerror="this.style.display='none';this.parentElement.innerHTML='🥊'">
+  </div>
+  <div class="gym-name">Heathrow Boxing Club</div>
+  <h1>Hashtag Bank</h1>
+  <div class="meta">Tap a platform · Copy the set · Paste under your caption</div>
+</header>
+
+<div class="container">
+
+  <div class="tabs">
+    <button class="tab active-ig" onclick="showPlatform('ig', this)">📸 Instagram</button>
+    <button class="tab" onclick="showPlatform('tt', this)">🎵 TikTok</button>
+    <button class="tab" onclick="showPlatform('fb', this)">👥 Facebook</button>
+    <button class="tab" onclick="showPlatform('yt', this)">▶️ YouTube Shorts</button>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       INSTAGRAM
+  ════════════════════════════════════════════════════════════ -->
+  <div id="panel-ig" class="platform-panel visible">
+
+    <div class="rules-banner">
+      <strong>Instagram rules:</strong> Max 30 tags. Mix tiers for best reach: <strong>8–10 Boxing (T1) + 4–5 Fitness (T2) + 3–4 Local (T3) + 3–4 Viral (T4)</strong>. Paste hashtags below the caption, separated by a line break. Don't put them in the caption text.
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#e67050;"></div> T1 Boxing-specific</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#ffa726;"></div> T2 Fitness/transformation</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#64b5f6;"></div> T3 Local/geographic</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#c77dff;"></div> T4 Viral/trending</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#69f0ae;"></div> Seasonal</div>
+    </div>
+
+    <!-- Full 30-tag set -->
+    <div class="section-title">Full Sets — Ready to Copy (30 tags)</div>
+
+    <div class="set-card">
+      <div class="set-header">
+        <div><div class="set-name">Reel — Controversy / Fat Loss / Gym vs Boxing</div><div class="set-count">30 tags · Mon/Tue energy posts</div></div>
+        <button class="copy-btn" onclick="copySet(this)">Copy</button>
+      </div>
+      <div class="set-body">
+        <div class="hashtag-cloud">
+          <span class="htag htag-t1">#boxing</span><span class="htag htag-t1">#boxingtraining</span><span class="htag htag-t1">#boxingfitness</span><span class="htag htag-t1">#boxingworkout</span><span class="htag htag-t1">#boxingclub</span><span class="htag htag-t1">#padwork</span><span class="htag htag-t1">#hittingpads</span><span class="htag htag-t1">#boxinglife</span><span class="htag htag-t1">#boxingcommunity</span>
+          <span class="htag htag-t2">#weightloss</span><span class="htag htag-t2">#fatburn</span><span class="htag htag-t2">#fitness</span><span class="htag htag-t2">#getfit</span><span class="htag htag-t2">#transformation</span>
+          <span class="htag htag-t3">#westdrayton</span><span class="htag htag-t3">#uxbridge</span><span class="htag htag-t3">#hayes</span><span class="htag htag-t3">#hillingdon</span><span class="htag htag-t3">#westlondon</span><span class="htag htag-t3">#londonboxing</span>
+          <span class="htag htag-t4">#reels</span><span class="htag htag-t4">#reelsinstagram</span><span class="htag htag-t4">#fyp</span><span class="htag htag-t4">#gymreels</span><span class="htag htag-t4">#boxingtok</span><span class="htag htag-t4">#gymtok</span><span class="htag htag-t4">#explore</span>
+          <span class="htag htag-season">#summerbody</span><span class="htag htag-season">#summershred</span><span class="htag htag-season">#gymmotivation</span>
+        </div>
+        <div class="set-raw">#boxing #boxingtraining #boxingfitness #boxingworkout #boxingclub #padwork #hittingpads #boxinglife #boxingcommunity #weightloss #fatburn #fitness #getfit #transformation #westdrayton #uxbridge #hayes #hillingdon #westlondon #londonboxing #reels #reelsinstagram #fyp #gymreels #boxingtok #gymtok #explore #summerbody #summershred #gymmotivation</div>
+      </div>
+    </div>
+
+    <div class="set-card">
+      <div class="set-header">
+        <div><div class="set-name">Reel — Educational / Beginner Tips / 5 Mistakes</div><div class="set-count">30 tags · Tutorial & list-format content</div></div>
+        <button class="copy-btn" onclick="copySet(this)">Copy</button>
+      </div>
+      <div class="set-body">
+        <div class="hashtag-cloud">
+          <span class="htag htag-t1">#boxing</span><span class="htag htag-t1">#boxingclass</span><span class="htag htag-t1">#boxingtraining</span><span class="htag htag-t1">#boxingcoach</span><span class="htag htag-t1">#boxingclub</span><span class="htag htag-t1">#boxingfitness</span><span class="htag htag-t1">#amateurboxing</span><span class="htag htag-t1">#boxingdrills</span><span class="htag htag-t1">#boxingskills</span><span class="htag htag-t1">#padwork</span>
+          <span class="htag htag-t2">#fitness</span><span class="htag htag-t2">#getfit</span><span class="htag htag-t2">#gymmotivation</span><span class="htag htag-t2">#martialarts</span><span class="htag htag-t2">#selfdefence</span>
+          <span class="htag htag-t3">#westdrayton</span><span class="htag htag-t3">#uxbridge</span><span class="htag htag-t3">#hayes</span><span class="htag htag-t3">#hillingdon</span><span class="htag htag-t3">#londonboxing</span><span class="htag htag-t3">#westlondon</span><span class="htag htag-t3">#londongyms</span>
+          <span class="htag htag-t4">#reels</span><span class="htag htag-t4">#reelsinstagram</span><span class="htag htag-t4">#fyp</span><span class="htag htag-t4">#viral</span><span class="htag htag-t4">#boxingtok</span><span class="htag htag-t4">#gymtok</span><span class="htag htag-t4">#explore</span><span class="htag htag-t4">#explorepage</span>
+        </div>
+        <div class="set-raw">#boxing #boxingclass #boxingtraining #boxingcoach #boxingclub #boxingfitness #amateurboxing #boxingdrills #boxingskills #padwork #fitness #getfit #gymmotivation #martialarts #selfdefence #westdrayton #uxbridge #hayes #hillingdon #londonboxing #westlondon #londongyms #reels #reelsinstagram #fyp #viral #boxingtok #gymtok #explore #explorepage</div>
+      </div>
+    </div>
+
+    <div class="set-card">
+      <div class="set-header">
+        <div><div class="set-name">Reel — Day in the Life / Community / POV</div><div class="set-count">30 tags · Lifestyle & gym culture posts</div></div>
+        <button class="copy-btn" onclick="copySet(this)">Copy</button>
+      </div>
+      <div class="set-body">
+        <div class="hashtag-cloud">
+          <span class="htag htag-t1">#boxing</span><span class="htag htag-t1">#boxinglife</span><span class="htag htag-t1">#boxingtraining</span><span class="htag htag-t1">#boxingclub</span><span class="htag htag-t1">#boxingcommunity</span><span class="htag htag-t1">#padwork</span><span class="htag htag-t1">#hittingpads</span><span class="htag htag-t1">#boxingcoach</span><span class="htag htag-t1">#boxingworkout</span><span class="htag htag-t1">#ukrainianboxing</span>
+          <span class="htag htag-t2">#fitness</span><span class="htag htag-t2">#fitlife</span><span class="htag htag-t2">#trainhard</span><span class="htag htag-t2">#gymmotivation</span><span class="htag htag-t2">#combatsports</span>
+          <span class="htag htag-t3">#westdrayton</span><span class="htag htag-t3">#uxbridge</span><span class="htag htag-t3">#hayes</span><span class="htag htag-t3">#westlondon</span><span class="htag htag-t3">#londonboxing</span><span class="htag htag-t3">#londongyms</span>
+          <span class="htag htag-t4">#reels</span><span class="htag htag-t4">#reelsinstagram</span><span class="htag htag-t4">#fyp</span><span class="htag htag-t4">#explore</span><span class="htag htag-t4">#gymreels</span><span class="htag htag-t4">#boxingtok</span><span class="htag htag-t4">#gymtok</span><span class="htag htag-t4">#fitnesstok</span>
+        </div>
+        <div class="set-raw">#boxing #boxinglife #boxingtraining #boxingclub #boxingcommunity #padwork #hittingpads #boxingcoach #boxingworkout #ukrainianboxing #fitness #fitlife #trainhard #gymmotivation #combatsports #westdrayton #uxbridge #hayes #westlondon #londonboxing #londongyms #reels #reelsinstagram #fyp #explore #gymreels #boxingtok #gymtok #fitnesstok</div>
+      </div>
+    </div>
+
+    <div class="set-card">
+      <div class="set-header">
+        <div><div class="set-name">Reel — Technical / Ukrainian Boxing Style</div><div class="set-count">28 tags · Technique breakdown posts</div></div>
+        <button class="copy-btn" onclick="copySet(this)">Copy</button>
+      </div>
+      <div class="set-body">
+        <div class="hashtag-cloud">
+          <span class="htag htag-t1">#boxing</span><span class="htag htag-t1">#boxingcoach</span><span class="htag htag-t1">#boxingtraining</span><span class="htag htag-t1">#ukrainianboxing</span><span class="htag htag-t1">#boxingskills</span><span class="htag htag-t1">#boxingtechnique</span><span class="htag htag-t1">#boxingdrills</span><span class="htag htag-t1">#amateurboxing</span><span class="htag htag-t1">#padwork</span><span class="htag htag-t1">#combatboxing</span>
+          <span class="htag htag-t2">#combatsports</span><span class="htag htag-t2">#martialarts</span><span class="htag htag-t2">#fighttraining</span><span class="htag htag-t2">#fitness</span><span class="htag htag-t2">#boxinglife</span>
+          <span class="htag htag-t3">#westdrayton</span><span class="htag htag-t3">#uxbridge</span><span class="htag htag-t3">#londonboxing</span><span class="htag htag-t3">#westlondon</span>
+          <span class="htag htag-t4">#reels</span><span class="htag htag-t4">#reelsinstagram</span><span class="htag htag-t4">#fyp</span><span class="htag htag-t4">#boxingtok</span><span class="htag htag-t4">#explore</span>
+        </div>
+        <div class="set-raw">#boxing #boxingcoach #boxingtraining #ukrainianboxing #boxingskills #boxingtechnique #boxingdrills #amateurboxing #padwork #combatboxing #combatsports #martialarts #fighttraining #fitness #boxinglife #westdrayton #uxbridge #londonboxing #westlondon #reels #reelsinstagram #fyp #boxingtok #explore</div>
+      </div>
+    </div>
+
+    <div class="set-card">
+      <div class="set-header">
+        <div><div class="set-name">Carousel — Transformation / Summer Motivation</div><div class="set-count">28 tags · Carousel/slideshow posts</div></div>
+        <button class="copy-btn" onclick="copySet(this)">Copy</button>
+      </div>
+      <div class="set-body">
+        <div class="hashtag-cloud">
+          <span class="htag htag-t1">#boxing</span><span class="htag htag-t1">#boxingfitness</span><span class="htag htag-t1">#boxingworkout</span><span class="htag htag-t1">#boxingclub</span><span class="htag htag-t1">#boxingcommunity</span>
+          <span class="htag htag-t2">#transformation</span><span class="htag htag-t2">#weightloss</span><span class="htag htag-t2">#getfit</span><span class="htag htag-t2">#fitness</span><span class="htag htag-t2">#gymmotivation</span><span class="htag htag-t2">#fitnessmotivation</span><span class="htag htag-t2">#bodygoals</span><span class="htag htag-t2">#fitnessjourney</span>
+          <span class="htag htag-t3">#westdrayton</span><span class="htag htag-t3">#uxbridge</span><span class="htag htag-t3">#hayes</span><span class="htag htag-t3">#westlondon</span><span class="htag htag-t3">#londonboxing</span>
+          <span class="htag htag-t4">#reels</span><span class="htag htag-t4">#explore</span><span class="htag htag-t4">#fyp</span>
+          <span class="htag htag-season">#summerbody</span><span class="htag htag-season">#summershred</span><span class="htag htag-season">#newgoals</span>
+        </div>
+        <div class="set-raw">#boxing #boxingfitness #boxingworkout #boxingclub #boxingcommunity #transformation #weightloss #getfit #fitness #gymmotivation #fitnessmotivation #bodygoals #fitnessjourney #westdrayton #uxbridge #hayes #westlondon #londonboxing #reels #explore #fyp #summerbody #summershred #newgoals</div>
+      </div>
+    </div>
+
+  </div><!-- /panel-ig -->
+
+
+  <!-- ════════════════════════════════════════════════════════
+       TIKTOK
+  ════════════════════════════════════════════════════════════ -->
+  <div id="panel-tt" class="platform-panel">
+
+    <div class="rules-banner">
+      <strong>TikTok rules:</strong> 3–5 tags only. Use <strong>1–2 boxing tags + 1–2 viral/trending tags</strong>. No local tags (they hurt discovery reach). Keep it tight — TikTok's algorithm doesn't reward hashtag spam the way IG does.
+    </div>
+
+    <div class="section-title">TikTok Sets — 3–5 Tags</div>
+
+    <div class="set-card">
+      <div class="set-header">
+        <div><div class="set-name">Controversy / Gym vs Boxing</div><div class="set-count">4 tags</div></div>
+        <button class="copy-btn" onclick="copySet(this)">Copy</button>
+      </div>
+      <div class="set-body">
+        <div class="hashtag-cloud">
+          <span class="htag htag-t1">#boxing</span><span class="htag htag-t1">#boxingfitness</span><span class="htag htag-t4">#fyp</span><span class="htag htag-t4">#gymtok</span>
+        </div>
+        <div class="set-raw">#boxing #boxingfitness #fyp #gymtok</div>
+      </div>
+    </div>
+
+    <div class="set-card">
+      <div class="set-header">
+        <div><div class="set-name">Beginner Tips / Educational</div><div class="set-count">4 tags</div></div>
+        <button class="copy-btn" onclick="copySet(this)">Copy</button>
+      </div>
+      <div class="set-body">
+        <div class="hashtag-cloud">
+          <span class="htag htag-t1">#boxing</span><span class="htag htag-t1">#boxingclass</span><span class="htag htag-t4">#fyp</span><span class="htag htag-t4">#boxingtok</span>
+        </div>
+        <div class="set-raw">#boxing #boxingclass #fyp #boxingtok</div>
+      </div>
+    </div>
+
+    <div class="set-card">
+      <div class="set-header">
+        <div><div class="set-name">Day in the Life / POV / Gym Culture</div><div class="set-count">4 tags</div></div>
+        <button class="copy-btn" onclick="copySet(this)">Copy</button>
+      </div>
+      <div class="set-body">
+        <div class="hashtag-cloud">
+          <span class="htag htag-t1">#boxing</span><span class="htag htag-t1">#boxinglife</span><span class="htag htag-t4">#fyp</span><span class="htag htag-t4">#gymtok</span>
+        </div>
+        <div class="set-raw">#boxing #boxinglife #fyp #gymtok</div>
+      </div>
+    </div>
+
+    <div class="set-card">
+      <div class="set-header">
+        <div><div class="set-name">Technical / Technique Breakdown</div><div class="set-count">4 tags</div></div>
+        <button class="copy-btn" onclick="copySet(this)">Copy</button>
+      </div>
+      <div class="set-body">
+        <div class="hashtag-cloud">
+          <span class="htag htag-t1">#boxing</span><span class="htag htag-t1">#boxingcoach</span><span class="htag htag-t4">#fyp</span><span class="htag htag-t4">#boxingtok</span>
+        </div>
+        <div class="set-raw">#boxing #boxingcoach #fyp #boxingtok</div>
+      </div>
+    </div>
+
+    <div class="set-card">
+      <div class="set-header">
+        <div><div class="set-name">Trending / Viral — Maximise FYP reach</div><div class="set-count">5 tags</div></div>
+        <button class="copy-btn" onclick="copySet(this)">Copy</button>
+      </div>
+      <div class="set-body">
+        <div class="hashtag-cloud">
+          <span class="htag htag-t1">#boxing</span><span class="htag htag-t1">#boxingfitness</span><span class="htag htag-t4">#fyp</span><span class="htag htag-t4">#foryoupage</span><span class="htag htag-t4">#viral</span>
+        </div>
+        <div class="set-raw">#boxing #boxingfitness #fyp #foryoupage #viral</div>
+      </div>
+    </div>
+
+  </div><!-- /panel-tt -->
+
+
+  <!-- ════════════════════════════════════════════════════════
+       FACEBOOK
+  ════════════════════════════════════════════════════════════ -->
+  <div id="panel-fb" class="platform-panel">
+
+    <div class="rules-banner">
+      <strong>Facebook rules:</strong> 3–5 tags maximum. Stick to <strong>boxing-specific + local</strong> tags only. Facebook hashtags have very limited discovery value — don't waste space with viral tags. Focus on searchability for local community.
+    </div>
+
+    <div class="section-title">Facebook Sets — 3–5 Tags</div>
+
+    <div class="set-card">
+      <div class="set-header">
+        <div><div class="set-name">General Gym / Community Post</div><div class="set-count">5 tags</div></div>
+        <button class="copy-btn" onclick="copySet(this)">Copy</button>
+      </div>
+      <div class="set-body">
+        <div class="hashtag-cloud">
+          <span class="htag htag-t1">#boxing</span><span class="htag htag-t1">#boxingclub</span><span class="htag htag-t3">#westdrayton</span><span class="htag htag-t3">#uxbridge</span><span class="htag htag-t3">#londonboxing</span>
+        </div>
+        <div class="set-raw">#boxing #boxingclub #westdrayton #uxbridge #londonboxing</div>
+      </div>
+    </div>
+
+    <div class="set-card">
+      <div class="set-header">
+        <div><div class="set-name">Technique / Ukrainian Boxing Style</div><div class="set-count">4 tags</div></div>
+        <button class="copy-btn" onclick="copySet(this)">Copy</button>
+      </div>
+      <div class="set-body">
+        <div class="hashtag-cloud">
+          <span class="htag htag-t1">#boxing</span><span class="htag htag-t1">#ukrainianboxing</span><span class="htag htag-t3">#westdrayton</span><span class="htag htag-t3">#westlondon</span>
+        </div>
+        <div class="set-raw">#boxing #ukrainianboxing #westdrayton #westlondon</div>
+      </div>
+    </div>
+
+    <div class="set-card">
+      <div class="set-header">
+        <div><div class="set-name">Local Reach / Community Event</div><div class="set-count">5 tags</div></div>
+        <button class="copy-btn" onclick="copySet(this)">Copy</button>
+      </div>
+      <div class="set-body">
+        <div class="hashtag-cloud">
+          <span class="htag htag-t1">#boxing</span><span class="htag htag-t3">#westdrayton</span><span class="htag htag-t3">#uxbridge</span><span class="htag htag-t3">#hayes</span><span class="htag htag-t3">#hillingdon</span>
+        </div>
+        <div class="set-raw">#boxing #westdrayton #uxbridge #hayes #hillingdon</div>
+      </div>
+    </div>
+
+  </div><!-- /panel-fb -->
+
+
+  <!-- ════════════════════════════════════════════════════════
+       YOUTUBE SHORTS
+  ════════════════════════════════════════════════════════════ -->
+  <div id="panel-yt" class="platform-panel">
+
+    <div class="rules-banner">
+      <strong>YouTube Shorts rules:</strong> Don't put hashtags in the title. Add 3–5 tags to the <strong>description only</strong> (below the video description text). YouTube's algorithm is primarily keyword-driven, not hashtag-driven — the tags below support discoverability but don't drive it.
+    </div>
+
+    <div class="section-title">YouTube Shorts — Description Tags</div>
+
+    <div class="set-card">
+      <div class="set-header">
+        <div><div class="set-name">Boxing Training / Technique</div><div class="set-count">5 tags for description</div></div>
+        <button class="copy-btn" onclick="copySet(this)">Copy</button>
+      </div>
+      <div class="set-body">
+        <div class="hashtag-cloud">
+          <span class="htag htag-t1">#boxing</span><span class="htag htag-t1">#boxingtraining</span><span class="htag htag-t1">#boxingcoach</span><span class="htag htag-t1">#ukrainianboxing</span><span class="htag htag-t1">#padwork</span>
+        </div>
+        <div class="set-raw">#boxing #boxingtraining #boxingcoach #ukrainianboxing #padwork</div>
+      </div>
+    </div>
+
+    <div class="set-card">
+      <div class="set-header">
+        <div><div class="set-name">Fitness / Beginner Boxing</div><div class="set-count">5 tags for description</div></div>
+        <button class="copy-btn" onclick="copySet(this)">Copy</button>
+      </div>
+      <div class="set-body">
+        <div class="hashtag-cloud">
+          <span class="htag htag-t1">#boxing</span><span class="htag htag-t1">#boxingfitness</span><span class="htag htag-t1">#boxingclass</span><span class="htag htag-t2">#fitness</span><span class="htag htag-t2">#weightloss</span>
+        </div>
+        <div class="set-raw">#boxing #boxingfitness #boxingclass #fitness #weightloss</div>
+      </div>
+    </div>
+
+  </div><!-- /panel-yt -->
+
+</div><!-- /container -->
+
+<script>
+  function showPlatform(platform, btn) {
+    document.querySelectorAll('.platform-panel').forEach(p => p.classList.remove('visible'));
+    document.getElementById('panel-' + platform).classList.add('visible');
+    document.querySelectorAll('.tab').forEach(t => t.className = 'tab');
+    btn.classList.add('active-' + platform);
+  }
+
+  function copySet(btn) {
+    const raw = btn.closest('.set-card').querySelector('.set-raw').textContent.trim();
+    navigator.clipboard.writeText(raw).then(() => {
+      btn.textContent = '✓ Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    }).catch(() => {
+      // Fallback for older browsers
+      const ta = document.createElement('textarea');
+      ta.value = raw;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      btn.textContent = '✓ Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+</script>
+
+</body>
+</html>

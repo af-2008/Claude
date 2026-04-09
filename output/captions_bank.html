@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heathrow BC — Caption Bank</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #0d0d0d; color: #f0f0f0; line-height: 1.6; padding: 0 0 60px; }
+
+  .site-header { background: linear-gradient(160deg, #1a0a00 0%, #111 60%, #0d0d0d 100%); border-bottom: 2px solid #e63600; padding: 24px 20px 20px; text-align: center; }
+  .logo-wrap { width: 72px; height: 72px; border-radius: 50%; border: 3px solid #e63600; overflow: hidden; margin: 0 auto 12px; background: #1a1a1a; box-shadow: 0 0 24px rgba(230,54,0,0.25); }
+  .logo-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #444; text-decoration: none; margin-bottom: 14px; padding: 5px 12px; border: 1px solid #2a2a2a; border-radius: 20px; transition: color 0.15s, border-color 0.15s; }
+  .back-link:hover { color: #e63600; border-color: #e63600; }
+  .site-header .gym-name { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #e63600; margin-bottom: 4px; }
+  .site-header h1 { font-size: 22px; font-weight: 900; color: #fff; }
+  .site-header .meta { font-size: 12px; color: #444; margin-top: 6px; }
+
+  .container { max-width: 780px; margin: 0 auto; padding: 0 16px; }
+  .section-title { font-size: 10px; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: #444; margin: 24px 0 12px; padding-bottom: 8px; border-bottom: 1px solid #1a1a1a; }
+
+  /* ─── Platform Tabs ───────────────────────────────────── */
+  .tabs { display: flex; gap: 6px; margin: 24px 0 20px; flex-wrap: wrap; }
+  .tab { background: #1a1a1a; border: 1px solid #2a2a2a; color: #666; font-size: 12px; font-weight: 800; padding: 8px 18px; border-radius: 20px; cursor: pointer; font-family: inherit; transition: all 0.15s; letter-spacing: 0.3px; -webkit-tap-highlight-color: transparent; }
+  .tab:hover { border-color: #555; color: #ccc; }
+  .tab.active-ig { background: rgba(199,125,255,0.12); border-color: #c77dff; color: #c77dff; }
+  .tab.active-tt { background: rgba(105,240,174,0.12); border-color: #69f0ae; color: #69f0ae; }
+  .tab.active-fb { background: rgba(100,181,246,0.12); border-color: #64b5f6; color: #64b5f6; }
+
+  .platform-panel { display: none; }
+  .platform-panel.visible { display: block; }
+
+  /* ─── Caption card ────────────────────────────────────── */
+  .cap-card { background: #141414; border: 1px solid #222; border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+  .cap-header { background: #1a1a1a; padding: 12px 16px; display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+  .cap-title { font-size: 14px; font-weight: 800; color: #fff; }
+  .cap-type { font-size: 11px; color: #555; margin-top: 2px; }
+  .copy-btn { background: rgba(230,54,0,0.12); border: 1px solid rgba(230,54,0,0.25); color: #e63600; font-size: 11px; font-weight: 800; padding: 5px 14px; border-radius: 12px; cursor: pointer; font-family: inherit; transition: all 0.15s; white-space: nowrap; flex-shrink: 0; -webkit-tap-highlight-color: transparent; }
+  .copy-btn:hover { background: rgba(230,54,0,0.2); }
+  .copy-btn.copied { background: rgba(105,240,174,0.12); border-color: #69f0ae; color: #69f0ae; }
+  .cap-body { padding: 16px; }
+  .caption-text { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 8px; padding: 14px; font-size: 13px; line-height: 1.8; white-space: pre-wrap; word-break: break-word; color: #ddd; }
+  .caption-text .cta { color: #e63600; font-weight: 700; }
+  .caption-text .hashtags { color: #444; font-size: 12px; margin-top: 8px; display: block; }
+  .cap-meta { margin-top: 10px; font-size: 11px; color: #444; display: flex; flex-wrap: wrap; gap: 12px; }
+  .cap-meta span { display: flex; align-items: center; gap: 4px; }
+  .ua-toggle { width: 100%; background: #0a1a0a; border: 1px solid #1a3a1a; border-radius: 8px; cursor: pointer; padding: 10px 14px; font-size: 13px; font-weight: 700; color: #81c784; text-align: left; display: flex; align-items: center; gap: 10px; margin-top: 12px; font-family: inherit; }
+  .ua-toggle:hover { background: #0d200d; }
+  .ua-toggle .arrow { margin-left: auto; transition: transform 0.2s; }
+  .ua-toggle.open .arrow { transform: rotate(180deg); }
+  .ua-block { display: none; background: #0a1a0a; border: 1px solid #1a3a1a; border-top: none; border-radius: 0 0 8px 8px; padding: 14px; font-size: 13px; line-height: 1.8; white-space: pre-wrap; word-break: break-word; color: #c8e6c9; }
+  .ua-block.visible { display: block; }
+  .cap-raw { display: none; }
+
+  @media (max-width: 480px) {
+    .cap-header { flex-direction: column; }
+    .copy-btn { align-self: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="back-link" href="../index.html">← Content Hub</a>
+  <div class="logo-wrap">
+    <img src="../resources/logo.png" alt="Heathrow Boxing Club" onerror="this.style.display='none';this.parentElement.innerHTML='🥊'">
+  </div>
+  <div class="gym-name">Heathrow Boxing Club</div>
+  <h1>Caption Bank</h1>
+  <div class="meta">Pick a platform · Copy the caption · Customise before posting</div>
+</header>
+
+<div class="container">
+
+  <div class="tabs">
+    <button class="tab active-ig" onclick="showPlatform('ig', this)">📸 Instagram</button>
+    <button class="tab" onclick="showPlatform('tt', this)">🎵 TikTok</button>
+    <button class="tab" onclick="showPlatform('fb', this)">👥 Facebook</button>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       INSTAGRAM
+  ════════════════════════════════════════════════════════════ -->
+  <div id="panel-ig" class="platform-panel visible">
+
+    <div class="section-title">Controversy / Gym vs Boxing</div>
+
+    <div class="cap-card">
+      <div class="cap-header">
+        <div><div class="cap-title">Stop Going to the Gym</div><div class="cap-type">Reel · Controversy hook · Fat loss audience</div></div>
+        <button class="copy-btn" onclick="copyCaption(this)">Copy</button>
+      </div>
+      <div class="cap-body">
+        <div class="caption-text">Stop going to the gym. Try this instead. 🥊
+
+Most people quit the gym because it's boring. You do the same 5 machines, stare at the same wall, go home feeling nothing. Boxing is different — every round is a problem to solve. Your brain is working as hard as your body.
+
+At Heathrow Boxing Club in West Drayton, we get complete beginners fit while teaching them real Ukrainian-style boxing. Not a fitness class. Actual boxing.
+
+Summer is 8 weeks away. Make those 8 weeks count.
+
+<span class="cta">DM us "TRAIN" to book your first class. 🔥</span>
+
+<span class="hashtags">#boxing #boxingtraining #boxingfitness #boxingworkout #boxingclub #padwork #hittingpads #boxinglife #boxingcommunity #weightloss #fatburn #fitness #getfit #transformation #gymmotivation #westdrayton #uxbridge #hayes #hillingdon #westlondon #londonboxing #londongyms #reels #reelsinstagram #fyp #gymreels #boxingtok #summerbody #summershred</span></div>
+        <div class="cap-raw">Stop going to the gym. Try this instead. 🥊
+
+Most people quit the gym because it's boring. You do the same 5 machines, stare at the same wall, go home feeling nothing. Boxing is different — every round is a problem to solve. Your brain is working as hard as your body.
+
+At Heathrow Boxing Club in West Drayton, we get complete beginners fit while teaching them real Ukrainian-style boxing. Not a fitness class. Actual boxing.
+
+Summer is 8 weeks away. Make those 8 weeks count.
+
+DM us "TRAIN" to book your first class. 🔥
+
+#boxing #boxingtraining #boxingfitness #boxingworkout #boxingclub #padwork #hittingpads #boxinglife #boxingcommunity #weightloss #fatburn #fitness #getfit #transformation #gymmotivation #westdrayton #uxbridge #hayes #hillingdon #westlondon #londonboxing #londongyms #reels #reelsinstagram #fyp #gymreels #boxingtok #summerbody #summershred</div>
+        <div class="cap-meta">
+          <span>📏 ~130 words</span>
+          <span>🎯 DM keyword: TRAIN</span>
+          <span>👥 Fat loss / gym-goer audience</span>
+        </div>
+        <button class="ua-toggle" onclick="toggleUA(this)">🇺🇦 Ukrainian Version — натисніть, щоб розгорнути <span class="arrow">▼</span></button>
+        <div class="ua-block">Кинь ходити в зал. Спробуй це. 🥊
+
+Більшість людей кидають тренажерний зал, бо там нудно. Одні й ті ж тренажери, та сама стіна, і йдеш додому — ні заряду, ні задоволення. Бокс — зовсім інше. Кожен раунд — це нова задача. Голова працює не менше, ніж тіло.
+
+У Heathrow Boxing Club у Вест-Дрейтоні ми доводимо новачків до форми, навчаючи їх справжньому боксу в українському стилі. Не фітнес-заняття — справжній бокс.
+
+До літа залишилось 8 тижнів. Зроби їх корисними.
+
+Напиши нам "TRAIN" і запишись на перше заняття. 🔥
+
+#boxing #boxingtraining #боксклуб #бокс #westdrayton #uxbridge #londonboxing #westlondon #fatburn #weightloss</div>
+      </div>
+    </div>
+
+    <div class="section-title">Educational / Beginner Content</div>
+
+    <div class="cap-card">
+      <div class="cap-header">
+        <div><div class="cap-title">5 Mistakes Every Beginner Makes</div><div class="cap-type">Reel · Educational / List · Broad audience</div></div>
+        <button class="copy-btn" onclick="copyCaption(this)">Copy</button>
+      </div>
+      <div class="cap-body">
+        <div class="caption-text">Every beginner does this. Every single one. 😅🥊
+
+5 mistakes we see in every first boxing class:
+
+1. Looking at your hands mid-combo
+2. Crossing your feet when moving
+3. Dropping your guard after every punch
+4. Holding your breath
+5. Trying to hit too hard too early
+
+The good news? Every one of these is fixed in the first few sessions. You don't need to be perfect to start. You just need to start.
+
+At Heathrow Boxing Club in West Drayton, we see these every week — and we love it. It means someone new is learning real boxing for the first time.
+
+<span class="cta">DM us "TRAIN" and come see which ones you do. 👊</span>
+
+<span class="hashtags">#boxing #boxingclass #boxingtraining #boxingcoach #boxingclub #boxingfitness #amateurboxing #boxingdrills #boxingskills #padwork #fitness #getfit #gymmotivation #martialarts #selfdefence #westdrayton #uxbridge #hayes #hillingdon #londonboxing #westlondon #londongyms #reels #reelsinstagram #fyp #viral #boxingtok #gymtok</span></div>
+        <div class="cap-raw">Every beginner does this. Every single one. 😅🥊
+
+5 mistakes we see in every first boxing class:
+
+1. Looking at your hands mid-combo
+2. Crossing your feet when moving
+3. Dropping your guard after every punch
+4. Holding your breath
+5. Trying to hit too hard too early
+
+The good news? Every one of these is fixed in the first few sessions. You don't need to be perfect to start. You just need to start.
+
+At Heathrow Boxing Club in West Drayton, we see these every week — and we love it. It means someone new is learning real boxing for the first time.
+
+DM us "TRAIN" and come see which ones you do. 👊
+
+#boxing #boxingclass #boxingtraining #boxingcoach #boxingclub #boxingfitness #amateurboxing #boxingdrills #boxingskills #padwork #fitness #getfit #gymmotivation #martialarts #selfdefence #westdrayton #uxbridge #hayes #hillingdon #londonboxing #westlondon #londongyms #reels #reelsinstagram #fyp #viral #boxingtok #gymtok</div>
+        <div class="cap-meta">
+          <span>📏 ~120 words</span>
+          <span>🎯 DM keyword: TRAIN</span>
+          <span>👥 Complete beginners</span>
+        </div>
+        <button class="ua-toggle" onclick="toggleUA(this)">🇺🇦 Ukrainian Version — натисніть, щоб розгорнути <span class="arrow">▼</span></button>
+        <div class="ua-block">Кожен новачок це робить. Абсолютно кожен. 😅🥊
+
+5 помилок, які ми бачимо на кожному першому занятті:
+
+1. Дивишся на власні руки замість цілі
+2. Перехрещуєш ноги під час руху
+3. Опускаєш захист після кожного удару
+4. Затримуєш дихання
+5. Намагаєшся бити якомога сильніше з першого разу
+
+Гарна новина? Всі ці помилки виправляються за кілька занять. Не треба бути ідеальним, щоб почати. Треба просто почати.
+
+У Heathrow Boxing Club у Вест-Дрейтоні ми бачимо це щотижня — і раді цьому. Бо це означає, що хтось вперше вчиться справжньому боксу.
+
+Напиши нам "TRAIN" і приходь перевірити, які помилки робиш ти. 👊</div>
+      </div>
+    </div>
+
+    <div class="section-title">Community / Day in the Life</div>
+
+    <div class="cap-card">
+      <div class="cap-header">
+        <div><div class="cap-title">Day at Heathrow Boxing Club</div><div class="cap-type">Reel · POV / Community · Identity audience</div></div>
+        <button class="copy-btn" onclick="copyCaption(this)">Copy</button>
+      </div>
+      <div class="cap-body">
+        <div class="caption-text">This is what a session at Heathrow Boxing Club looks like. 🥊🔥
+
+Hands wrapped. Gloves on. Every round is earned.
+
+We're a real boxing gym in West Drayton — Ukrainian-style technique, proper coaches, people who take the sport seriously. Whether you're coming to get fit, learn to fight, or just try something completely different — you'll leave a different person.
+
+Come train with us.
+
+<span class="cta">DM us "GYM" or drop in — West Drayton, open 7 days. 👊</span>
+
+<span class="hashtags">#boxing #boxinglife #boxingtraining #boxingclub #boxingcommunity #padwork #hittingpads #boxingcoach #boxingworkout #ukrainianboxing #fitness #fitlife #trainhard #gymmotivation #combatsports #westdrayton #uxbridge #hayes #westlondon #londonboxing #londongyms #reels #reelsinstagram #fyp #explore #gymreels</span></div>
+        <div class="cap-raw">This is what a session at Heathrow Boxing Club looks like. 🥊🔥
+
+Hands wrapped. Gloves on. Every round is earned.
+
+We're a real boxing gym in West Drayton — Ukrainian-style technique, proper coaches, people who take the sport seriously. Whether you're coming to get fit, learn to fight, or just try something completely different — you'll leave a different person.
+
+Come train with us.
+
+DM us "GYM" or drop in — West Drayton, open 7 days. 👊
+
+#boxing #boxinglife #boxingtraining #boxingclub #boxingcommunity #padwork #hittingpads #boxingcoach #boxingworkout #ukrainianboxing #fitness #fitlife #trainhard #gymmotivation #combatsports #westdrayton #uxbridge #hayes #westlondon #londonboxing #londongyms #reels #reelsinstagram #fyp #explore #gymreels</div>
+        <div class="cap-meta">
+          <span>📏 ~100 words</span>
+          <span>🎯 DM keyword: GYM</span>
+          <span>👥 Aspiring fighters / curious beginners</span>
+        </div>
+        <button class="ua-toggle" onclick="toggleUA(this)">🇺🇦 Ukrainian Version — натисніть, щоб розгорнути <span class="arrow">▼</span></button>
+        <div class="ua-block">Ось як виглядає заняття в Heathrow Boxing Club. 🥊🔥
+
+Руки забинтовані. Рукавиці надіті. Кожен раунд — заслужений.
+
+Ми — справжній боксерський клуб у Вест-Дрейтоні: техніка в українському стилі, грамотні тренери, люди, які серйозно ставляться до спорту. Неважливо, чи ти прийшов за формою, навчитися битися, чи просто спробувати щось зовсім нове — ти підеш іншою людиною.
+
+Приходь тренуватися.
+
+Напиши нам "GYM" або просто заходь — Вест-Дрейтон, відкриті 7 днів. 👊</div>
+      </div>
+    </div>
+
+    <div class="section-title">Technical / Ukrainian Boxing Style</div>
+
+    <div class="cap-card">
+      <div class="cap-header">
+        <div><div class="cap-title">Ukrainian Boxing Is Different</div><div class="cap-type">Reel · Technical / Curiosity · Fighters + curious audience</div></div>
+        <button class="copy-btn" onclick="copyCaption(this)">Copy</button>
+      </div>
+      <div class="cap-body">
+        <div class="caption-text">Ukrainian boxing is different. Here's why it matters. 🎯
+
+Most boxing gyms teach the same upright stance. It looks clean. It works at beginner level. But when the punches come faster, the guard breaks down.
+
+Ukrainian-style boxing builds defensive structure first — a tight shell, movement from the hips, and combinations built around protection, not just attack.
+
+That's what we teach at Heathrow Boxing Club. Real technique, properly coached.
+
+Curious? Come see it in person.
+
+<span class="cta">DM us "TECHNIQUE" to book. 🥊</span>
+
+<span class="hashtags">#boxing #boxingcoach #boxingtraining #ukrainianboxing #boxingskills #boxingtechnique #boxingdrills #amateurboxing #padwork #combatboxing #combatsports #martialarts #fighttraining #fitness #boxinglife #westdrayton #uxbridge #londonboxing #westlondon #reels #reelsinstagram #fyp #boxingtok</span></div>
+        <div class="cap-raw">Ukrainian boxing is different. Here's why it matters. 🎯
+
+Most boxing gyms teach the same upright stance. It looks clean. It works at beginner level. But when the punches come faster, the guard breaks down.
+
+Ukrainian-style boxing builds defensive structure first — a tight shell, movement from the hips, and combinations built around protection, not just attack.
+
+That's what we teach at Heathrow Boxing Club. Real technique, properly coached.
+
+Curious? Come see it in person.
+
+DM us "TECHNIQUE" to book. 🥊
+
+#boxing #boxingcoach #boxingtraining #ukrainianboxing #boxingskills #boxingtechnique #boxingdrills #amateurboxing #padwork #combatboxing #combatsports #martialarts #fighttraining #fitness #boxinglife #westdrayton #uxbridge #londonboxing #westlondon #reels #reelsinstagram #fyp #boxingtok</div>
+        <div class="cap-meta">
+          <span>📏 ~110 words</span>
+          <span>🎯 DM keyword: TECHNIQUE</span>
+          <span>👥 Fighters + technique-curious</span>
+        </div>
+        <button class="ua-toggle" onclick="toggleUA(this)">🇺🇦 Ukrainian Version — натисніть, щоб розгорнути <span class="arrow">▼</span></button>
+        <div class="ua-block">Бокс в українському стилі — це інакше. І ось чому це важливо. 🎯
+
+Більшість боксерських залів навчає стандартній прямій стійці. Виглядає чисто. Для початківців підходить. Але коли удари стають швидшими — захист розвалюється.
+
+Бокс в українському стилі будується на захисній структурі перш за все: щільна "черепаха", рух від стегна, і серії, які починаються із захисту, а не навпаки.
+
+Саме це ми викладаємо в Heathrow Boxing Club. Справжня техніка, грамотно поставлена.
+
+Цікаво? Приходь подивитися особисто.
+
+Напиши нам "TECHNIQUE" і запишись. 🥊</div>
+      </div>
+    </div>
+
+    <div class="section-title">Transformation / Seasonal</div>
+
+    <div class="cap-card">
+      <div class="cap-header">
+        <div><div class="cap-title">Summer Is 8 Weeks Away</div><div class="cap-type">Carousel / Reel · Transformation urgency · Fat loss audience</div></div>
+        <button class="copy-btn" onclick="copyCaption(this)">Copy</button>
+      </div>
+      <div class="cap-body">
+        <div class="caption-text">Eight weeks until summer. That's 8 weeks to actually do something different this year. 🎯
+
+The gym routine isn't working — we all know it. Same machines, same playlist, same "I'll go harder next week."
+
+Boxing gives you something the gym never will: a reason to come back. Every session is different. Every round you're faster, sharper, more capable than the last.
+
+At Heathrow Boxing Club in West Drayton, we take complete beginners and teach them real boxing — Ukrainian-style technique, proper coaching, genuine community.
+
+Eight weeks is enough.
+
+<span class="cta">DM us "SUMMER" to book your first class. 🥊</span>
+
+<span class="hashtags">#boxing #boxingfitness #boxingworkout #transformation #weightloss #getfit #fitness #gymmotivation #fitnessmotivation #bodygoals #westdrayton #uxbridge #hayes #westlondon #londonboxing #reels #explore #summerbody #summershred</span></div>
+        <div class="cap-raw">Eight weeks until summer. That's 8 weeks to actually do something different this year. 🎯
+
+The gym routine isn't working — we all know it. Same machines, same playlist, same "I'll go harder next week."
+
+Boxing gives you something the gym never will: a reason to come back. Every session is different. Every round you're faster, sharper, more capable than the last.
+
+At Heathrow Boxing Club in West Drayton, we take complete beginners and teach them real boxing — Ukrainian-style technique, proper coaching, genuine community.
+
+Eight weeks is enough.
+
+DM us "SUMMER" to book your first class. 🥊
+
+#boxing #boxingfitness #boxingworkout #transformation #weightloss #getfit #fitness #gymmotivation #fitnessmotivation #bodygoals #westdrayton #uxbridge #hayes #westlondon #londonboxing #reels #explore #summerbody #summershred</div>
+        <div class="cap-meta">
+          <span>📏 ~120 words</span>
+          <span>🎯 DM keyword: SUMMER</span>
+          <span>👥 Transformation / seasonal urgency</span>
+        </div>
+        <button class="ua-toggle" onclick="toggleUA(this)">🇺🇦 Ukrainian Version — натисніть, щоб розгорнути <span class="arrow">▼</span></button>
+        <div class="ua-block">Вісім тижнів до літа. Це 8 тижнів, щоб нарешті зробити щось інакше. 🎯
+
+Тренування в залі не дають результату — ми всі це знаємо. Ті самі тренажери, той самий плейлист, те саме "наступного тижня постараюся більше."
+
+Бокс дає те, чого зал ніколи не дасть: причину повернутися. Кожне заняття — нове. Кожен раунд — ти швидший, чіткіший, сильніший, ніж минулого разу.
+
+У Heathrow Boxing Club у Вест-Дрейтоні ми беремо повних новачків і навчаємо їх справжньому боксу — техніка в українському стилі, грамотні тренери, справжня спільнота.
+
+Восьми тижнів достатньо.
+
+Напиши нам "SUMMER" і запишись на перше заняття. 🥊</div>
+      </div>
+    </div>
+
+  </div><!-- /panel-ig -->
+
+
+  <!-- ════════════════════════════════════════════════════════
+       TIKTOK
+  ════════════════════════════════════════════════════════════ -->
+  <div id="panel-tt" class="platform-panel">
+
+    <div class="section-title">TikTok Captions — Short & Direct (150 chars max)</div>
+
+    <div class="cap-card">
+      <div class="cap-header">
+        <div><div class="cap-title">Gym vs Boxing — Controversy</div><div class="cap-type">Reel · 4 hashtags</div></div>
+        <button class="copy-btn" onclick="copyCaption(this)">Copy</button>
+      </div>
+      <div class="cap-body">
+        <div class="caption-text">Stop going to the gym. Do this instead 🥊 #boxing #boxingfitness #fyp #gymtok</div>
+        <div class="cap-raw">Stop going to the gym. Do this instead 🥊 #boxing #boxingfitness #fyp #gymtok</div>
+        <div class="cap-meta"><span>📏 74 chars</span><span>🎵 Pair with high-energy trending audio</span></div>
+      </div>
+    </div>
+
+    <div class="cap-card">
+      <div class="cap-header">
+        <div><div class="cap-title">5 Mistakes — Educational</div><div class="cap-type">Reel · 4 hashtags</div></div>
+        <button class="copy-btn" onclick="copyCaption(this)">Copy</button>
+      </div>
+      <div class="cap-body">
+        <div class="caption-text">Every beginner does this 😅 #boxing #boxingclass #fyp #boxingtok</div>
+        <div class="cap-raw">Every beginner does this 😅 #boxing #boxingclass #fyp #boxingtok</div>
+        <div class="cap-meta"><span>📏 64 chars</span><span>🎵 Pair with light/comedic audio</span></div>
+      </div>
+    </div>
+
+    <div class="cap-card">
+      <div class="cap-header">
+        <div><div class="cap-title">Day in the Life — POV</div><div class="cap-type">Reel · 4 hashtags</div></div>
+        <button class="copy-btn" onclick="copyCaption(this)">Copy</button>
+      </div>
+      <div class="cap-body">
+        <div class="caption-text">A day at our boxing gym in West London 🥊 #boxing #boxinglife #fyp #gymtok</div>
+        <div class="cap-raw">A day at our boxing gym in West London 🥊 #boxing #boxinglife #fyp #gymtok</div>
+        <div class="cap-meta"><span>📏 74 chars</span><span>🎵 Best post for trending audio sync</span></div>
+      </div>
+    </div>
+
+    <div class="cap-card">
+      <div class="cap-header">
+        <div><div class="cap-title">Ukrainian Boxing — Technical</div><div class="cap-type">Reel · 4 hashtags</div></div>
+        <button class="copy-btn" onclick="copyCaption(this)">Copy</button>
+      </div>
+      <div class="cap-body">
+        <div class="caption-text">Most boxing gyms teach this. We don't. 🥊 #boxing #boxingcoach #fyp #boxingtok</div>
+        <div class="cap-raw">Most boxing gyms teach this. We don't. 🥊 #boxing #boxingcoach #fyp #boxingtok</div>
+        <div class="cap-meta"><span>📏 79 chars</span><span>🎵 Original gym audio — no music needed</span></div>
+      </div>
+    </div>
+
+  </div><!-- /panel-tt -->
+
+
+  <!-- ════════════════════════════════════════════════════════
+       FACEBOOK
+  ════════════════════════════════════════════════════════════ -->
+  <div id="panel-fb" class="platform-panel">
+
+    <div class="section-title">Facebook Captions — Storytelling, Community-Focused</div>
+
+    <div class="cap-card">
+      <div class="cap-header">
+        <div><div class="cap-title">5 Mistakes — Welcoming Beginners</div><div class="cap-type">Video post · Longer storytelling format</div></div>
+        <button class="copy-btn" onclick="copyCaption(this)">Copy</button>
+      </div>
+      <div class="cap-body">
+        <div class="caption-text">Starting boxing can feel intimidating — but here's the truth: every single person who walks through our door makes these same 5 mistakes in their first class.
+
+1. Looking at their hands mid-combination
+2. Crossing their feet when moving
+3. Dropping the guard after punching
+4. Holding their breath
+5. Swinging too hard before they've learned control
+
+And you know what? That's completely normal. We see it every week and we love it — it means someone new is learning real boxing for the first time.
+
+At Heathrow Boxing Club in West Drayton, we've helped complete beginners go from nervous first-timers to confident boxers. Whatever your age, background, or fitness level — you'll fit in here.
+
+<span class="cta">Message us or drop in — we're in West Drayton, open 7 days. 📍</span>
+
+<span class="hashtags">#boxing #boxingclub #westdrayton #uxbridge #londonboxing</span></div>
+        <div class="cap-raw">Starting boxing can feel intimidating — but here's the truth: every single person who walks through our door makes these same 5 mistakes in their first class.
+
+1. Looking at their hands mid-combination
+2. Crossing their feet when moving
+3. Dropping the guard after punching
+4. Holding their breath
+5. Swinging too hard before they've learned control
+
+And you know what? That's completely normal. We see it every week and we love it — it means someone new is learning real boxing for the first time.
+
+At Heathrow Boxing Club in West Drayton, we've helped complete beginners go from nervous first-timers to confident boxers. Whatever your age, background, or fitness level — you'll fit in here.
+
+Message us or drop in — we're in West Drayton, open 7 days. 📍
+
+#boxing #boxingclub #westdrayton #uxbridge #londonboxing</div>
+        <div class="cap-meta"><span>📏 ~160 words</span><span>👥 Local community / older demographic</span></div>
+        <button class="ua-toggle" onclick="toggleUA(this)">🇺🇦 Ukrainian Version — натисніть, щоб розгорнути <span class="arrow">▼</span></button>
+        <div class="ua-block">Починати займатися боксом може бути страшно — але правда ось у чому: кожен, хто переступає наш поріг, робить ці самі 5 помилок на першому занятті.
+
+1. Дивиться на руки замість цілі
+2. Перехрещує ноги під час руху
+3. Опускає захист після удару
+4. Затримує дихання
+5. Б'є надто сильно, ще не відпрацювавши техніку
+
+І знаєте що? Це абсолютно нормально. Ми бачимо це щотижня — і раді цьому. Бо це означає, що хтось новий вперше вчиться справжньому боксу.
+
+У Heathrow Boxing Club у Вест-Дрейтоні ми допомогли сотням новачків пройти шлях від нервових першопрохідців до впевнених боксерів. Незалежно від віку, досвіду чи рівня підготовки — тут тобі знайдеться місце.
+
+Напишіть або приходьте — ми у Вест-Дрейтоні, відкриті 7 днів на тиждень. 📍
+
+#boxing #boxingclub #westdrayton #uxbridge #londonboxing</div>
+      </div>
+    </div>
+
+    <div class="cap-card">
+      <div class="cap-header">
+        <div><div class="cap-title">Ukrainian Boxing Technique Explained</div><div class="cap-type">Video post · Technical / authority</div></div>
+        <button class="copy-btn" onclick="copyCaption(this)">Copy</button>
+      </div>
+      <div class="cap-body">
+        <div class="caption-text">A lot of people ask us what makes Ukrainian-style boxing different from what you'd learn at most boxing clubs. Here's the honest answer.
+
+Most gyms teach a standard upright stance — it's fine for fitness boxing and beginner sparring. But it leaves you exposed when the pace increases.
+
+Ukrainian boxing prioritises defensive structure: a tighter shell, weight distribution that allows movement in any direction, and combinations that flow from a protected position rather than an open one.
+
+It's not flashy. It's disciplined, technical, and genuinely effective — which is exactly why our coaches teach it.
+
+If you're serious about learning real boxing in West Drayton, come in and try a class. We take complete beginners through to fighters preparing for bouts.
+
+<span class="cta">Message us or come down — open 7 days. 📍 Heathrow Boxing Club, West Drayton</span>
+
+<span class="hashtags">#boxing #ukrainianboxing #boxingclub #westdrayton #uxbridge</span></div>
+        <div class="cap-raw">A lot of people ask us what makes Ukrainian-style boxing different from what you'd learn at most boxing clubs. Here's the honest answer.
+
+Most gyms teach a standard upright stance — it's fine for fitness boxing and beginner sparring. But it leaves you exposed when the pace increases.
+
+Ukrainian boxing prioritises defensive structure: a tighter shell, weight distribution that allows movement in any direction, and combinations that flow from a protected position rather than an open one.
+
+It's not flashy. It's disciplined, technical, and genuinely effective — which is exactly why our coaches teach it.
+
+If you're serious about learning real boxing in West Drayton, come in and try a class. We take complete beginners through to fighters preparing for bouts.
+
+Message us or come down — open 7 days. 📍 Heathrow Boxing Club, West Drayton
+
+#boxing #ukrainianboxing #boxingclub #westdrayton #uxbridge</div>
+        <div class="cap-meta"><span>📏 ~170 words</span><span>👥 Fighters + curious locals</span></div>
+        <button class="ua-toggle" onclick="toggleUA(this)">🇺🇦 Ukrainian Version — натисніть, щоб розгорнути <span class="arrow">▼</span></button>
+        <div class="ua-block">Нас часто запитують, чим бокс в українському стилі відрізняється від того, чому навчають у більшості клубів. Відповідаємо чесно.
+
+Більшість залів навчає стандартній прямій стійці — вона підходить для фітнес-боксу і початкового спарингу. Але коли темп зростає, вона залишає вас відкритим.
+
+Бокс в українському стилі ставить захисну структуру на перше місце: щільна стійка, розподіл ваги, що дозволяє рухатися в будь-якому напрямку, і серії, що починаються із захисту, а не з відкритої позиції.
+
+Без показухи. Дисципліновано, технічно і справді ефективно — саме тому наші тренери так і навчають.
+
+Якщо ти серйозно хочеш навчитися справжньому боксу у Вест-Дрейтоні — приходь. Ми приймаємо як повних новачків, так і тих, хто готується до боїв.
+
+Напишіть або приходьте — відкриті 7 днів. 📍 Heathrow Boxing Club, Вест-Дрейтон
+
+#boxing #ukrainianboxing #boxingclub #westdrayton #uxbridge</div>
+      </div>
+    </div>
+
+  </div><!-- /panel-fb -->
+
+</div><!-- /container -->
+
+<script>
+  function showPlatform(platform, btn) {
+    document.querySelectorAll('.platform-panel').forEach(p => p.classList.remove('visible'));
+    document.getElementById('panel-' + platform).classList.add('visible');
+    document.querySelectorAll('.tab').forEach(t => t.className = 'tab');
+    btn.classList.add('active-' + platform);
+  }
+
+  function toggleUA(btn) {
+    btn.classList.toggle('open');
+    const block = btn.nextElementSibling;
+    block.classList.toggle('visible');
+  }
+
+  function copyCaption(btn) {
+    const raw = btn.closest('.cap-card').querySelector('.cap-raw').textContent.trim();
+    navigator.clipboard.writeText(raw).then(() => {
+      btn.textContent = '✓ Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    }).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = raw;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      btn.textContent = '✓ Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+</script>
+
+</body>
+</html>

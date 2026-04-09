@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heathrow BC — Performance & Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #0d0d0d; color: #f0f0f0; line-height: 1.6; padding: 0 0 60px; }
+
+  .site-header { background: linear-gradient(160deg, #1a0a00 0%, #111 60%, #0d0d0d 100%); border-bottom: 2px solid #e63600; padding: 24px 20px 20px; text-align: center; }
+  .logo-wrap { width: 72px; height: 72px; border-radius: 50%; border: 3px solid #e63600; overflow: hidden; margin: 0 auto 12px; background: #1a1a1a; box-shadow: 0 0 24px rgba(230,54,0,0.25); }
+  .logo-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #444; text-decoration: none; margin-bottom: 14px; padding: 5px 12px; border: 1px solid #2a2a2a; border-radius: 20px; transition: color 0.15s, border-color 0.15s; }
+  .back-link:hover { color: #e63600; border-color: #e63600; }
+  .site-header .gym-name { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #e63600; margin-bottom: 4px; }
+  .site-header h1 { font-size: 22px; font-weight: 900; color: #fff; }
+  .site-header .meta { font-size: 12px; color: #444; margin-top: 6px; }
+
+  .container { max-width: 780px; margin: 0 auto; padding: 0 16px; }
+  .section-title { font-size: 10px; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: #444; margin: 28px 0 14px; padding-bottom: 8px; border-bottom: 1px solid #1a1a1a; }
+
+  /* ─── Info banner ─────────────────────────────────────── */
+  .info-banner { background: #141414; border: 1px solid #222; border-left: 3px solid #e63600; border-radius: 8px; padding: 14px 16px; font-size: 13px; color: #aaa; margin: 20px 0 0; line-height: 1.6; }
+  .info-banner strong { color: #fff; }
+  .info-banner .update-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(105,240,174,0.1); border: 1px solid rgba(105,240,174,0.2); border-radius: 6px; padding: 4px 10px; font-size: 11px; font-weight: 700; color: #69f0ae; margin-top: 8px; }
+
+  /* ─── Date range selector ─────────────────────────────── */
+  .date-row { display: flex; align-items: center; gap: 10px; margin: 20px 0 0; flex-wrap: wrap; }
+  .date-row label { font-size: 11px; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 1px; }
+  .date-btn { background: #1a1a1a; border: 1px solid #2a2a2a; color: #888; font-size: 11px; font-weight: 700; padding: 6px 14px; border-radius: 16px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+  .date-btn:hover { border-color: #555; color: #ccc; }
+  .date-btn.active { background: rgba(230,54,0,0.12); border-color: #e63600; color: #e63600; }
+
+  /* ─── Dashboard embed wrapper ─────────────────────────── */
+  .dashboard-wrap { position: relative; width: 100%; background: #111; border: 1px solid #1e1e1e; border-radius: 14px; overflow: hidden; margin-top: 16px; }
+  .dashboard-wrap iframe { display: block; width: 100%; border: none; min-height: 2200px; }
+  .dashboard-loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 13px; color: #444; pointer-events: none; }
+
+  /* ─── GA4 property info ────────────────────────────────── */
+  .property-card { background: #141414; border: 1px solid #222; border-radius: 10px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+  .property-label { font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: #444; margin-bottom: 4px; }
+  .property-val { font-size: 14px; font-weight: 800; color: #fff; }
+  .property-sub { font-size: 11px; color: #555; margin-top: 2px; }
+  .live-dot { display: inline-block; width: 8px; height: 8px; background: #69f0ae; border-radius: 50%; margin-right: 6px; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* ─── Notes section ────────────────────────────────────── */
+  .notes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+  .note-card { background: #141414; border: 1px solid #222; border-radius: 10px; padding: 14px; font-size: 12px; color: #888; line-height: 1.6; }
+  .note-card h3 { font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: #555; margin-bottom: 8px; }
+  .note-card strong { color: #ccc; }
+
+  @media (max-width: 600px) {
+    .notes-grid { grid-template-columns: 1fr; }
+    .dashboard-wrap iframe { min-height: 1600px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="back-link" href="../index.html">← Content Hub</a>
+  <div class="logo-wrap">
+    <img src="../resources/logo.png" alt="Heathrow Boxing Club" onerror="this.style.display='none';this.parentElement.innerHTML='🥊'">
+  </div>
+  <div class="gym-name">Heathrow Boxing Club</div>
+  <h1>Performance & Analytics</h1>
+  <div class="meta">Powered by Google Analytics 4 · Auto-updates in real time</div>
+</header>
+
+
+<div class="container">
+
+  <!-- ── GA4 PROPERTY STATUS ──────────────────────────────── -->
+  <div class="section-title">Connection Status</div>
+
+  <div class="property-card">
+    <div>
+      <div class="property-label">Google Analytics 4</div>
+      <div class="property-val"><span class="live-dot"></span>Heathrow Boxing Club</div>
+      <div class="property-sub">Property ID: 368791810 · Data refreshes every ~24h in Looker Studio</div>
+    </div>
+    <div style="text-align:right;">
+      <div class="property-label">Dashboard</div>
+      <div style="font-size:12px;color:#69f0ae;font-weight:700;">✓ Connected</div>
+      <div class="property-sub">Via Looker Studio</div>
+    </div>
+  </div>
+
+  <div class="info-banner">
+    <strong>This dashboard updates automatically.</strong> You don't need to do anything — Looker Studio pulls fresh data from your Google Analytics 4 account every time the page loads or refreshes. No manual exports, no new dashboards to create each week.
+    <br><br>
+    To change the date range: use the date controls <strong>inside the dashboard</strong> (top of the embedded report). The dashboard will remember your last selection.
+    <div class="update-badge">🟢 Auto-updating · GA4 Property 368791810</div>
+  </div>
+
+
+  <!-- ── LOOKER STUDIO DASHBOARD ──────────────────────────── -->
+  <div class="section-title">Analytics Dashboard</div>
+
+  <div class="dashboard-wrap">
+    <div class="dashboard-loading">Loading dashboard…</div>
+    <iframe
+      src="https://lookerstudio.google.com/embed/reporting/516e2be1-e95e-424b-a678-c38bfdbaa21b/page/kIV1C"
+      frameborder="0"
+      style="border:0"
+      allowfullscreen
+      sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+      onload="this.previousElementSibling.style.display='none'"
+    ></iframe>
+  </div>
+
+
+  <!-- ── HOW TO READ THIS ─────────────────────────────────── -->
+  <div class="section-title">How to Use This Dashboard</div>
+
+  <div class="notes-grid">
+    <div class="note-card">
+      <h3>What the data shows</h3>
+      Looker Studio is pulling from your <strong>Google Analytics 4</strong> account — this tracks visits to your website (heathrowboxingclub.com), not your social media posts directly. It shows: sessions, users, page views, traffic sources, and geographic data.
+    </div>
+    <div class="note-card">
+      <h3>What to look for weekly</h3>
+      After posting a Reel, check if <strong>Direct / Social traffic spikes</strong>. A spike means people searched your gym name or clicked a link after seeing your content. Track this weekly to see which content types drive real website visits.
+    </div>
+    <div class="note-card">
+      <h3>Social media stats</h3>
+      Instagram, TikTok and Facebook <strong>don't connect to GA4</strong> — those stats live in their own apps. For IG: go to Professional Dashboard → Insights. For TikTok: Creator Tools → Analytics. Log those numbers in the Performance Analyst workflow (Workflow 08).
+    </div>
+    <div class="note-card">
+      <h3>Changing the date range</h3>
+      Click the date range selector inside the embedded dashboard above. Set it to <strong>Last 28 days</strong> for a rolling monthly view. For week-by-week comparison, use <strong>Last 7 days</strong> and screenshot it each Monday.
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
