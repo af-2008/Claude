@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heathrow Boxing Club — Content Hub</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #0d0d0d;
+    color: #f0f0f0;
+    min-height: 100vh;
+    padding-bottom: 60px;
+  }
+
+  /* ─── Header ─────────────────────── */
+  .header {
+    background: linear-gradient(160deg, #1a0a00 0%, #111 60%, #0d0d0d 100%);
+    border-bottom: 2px solid #e63600;
+    padding: 32px 20px 28px;
+    text-align: center;
+  }
+  .logo-wrap {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    border: 3px solid #e63600;
+    overflow: hidden;
+    margin: 0 auto 16px;
+    background: #1a1a1a;
+    box-shadow: 0 0 24px rgba(230,54,0,0.25);
+  }
+  .logo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .header .gym-name {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #e63600;
+    margin-bottom: 6px;
+  }
+  .header h1 {
+    font-size: 26px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+  .header .tagline {
+    font-size: 13px;
+    color: #555;
+  }
+
+  /* ─── Container ──────────────────── */
+  .container { max-width: 720px; margin: 0 auto; padding: 0 16px; }
+
+  /* ─── Section Labels ─────────────── */
+  .section-title {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #444;
+    margin: 36px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #1a1a1a;
+  }
+
+  /* ─── Content Cards ──────────────── */
+  .card-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .card {
+    background: #141414;
+    border: 1px solid #222;
+    border-radius: 12px;
+    padding: 16px 18px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .card:hover { background: #1a1a1a; border-color: #e63600; }
+
+  .card-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .icon-calendar { background: rgba(230,54,0,0.12); }
+  .icon-reel     { background: rgba(199,125,255,0.12); }
+  .icon-caption  { background: rgba(100,181,246,0.12); }
+  .icon-analysis { background: rgba(105,240,174,0.12); }
+  .icon-strategy { background: rgba(255,167,38,0.12); }
+
+  .card-body { flex: 1; min-width: 0; }
+  .card-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 3px;
+  }
+  .card-meta { font-size: 11px; color: #555; }
+
+  .card-arrow {
+    color: #333;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .card:hover .card-arrow { color: #e63600; }
+
+  /* ─── Tags ───────────────────────── */
+  .tag-row { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+  .tag {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+  .tag-calendar  { background: rgba(230,54,0,0.15);    color: #e63600; }
+  .tag-ig        { background: rgba(199,125,255,0.15); color: #c77dff; }
+  .tag-tt        { background: rgba(105,240,174,0.15); color: #69f0ae; }
+  .tag-fb        { background: rgba(100,181,246,0.15); color: #64b5f6; }
+  .tag-reel      { background: rgba(255,167,38,0.15);  color: #ffa726; }
+  .tag-carousel  { background: rgba(129,199,132,0.15); color: #81c784; }
+  .tag-ua        { background: rgba(76,175,80,0.15);   color: #4caf50; }
+
+  /* ─── Empty state ────────────────── */
+  .empty {
+    text-align: center;
+    padding: 32px 20px;
+    color: #333;
+    font-size: 13px;
+  }
+  .empty .empty-icon { font-size: 32px; margin-bottom: 10px; }
+
+  /* ─── Footer ─────────────────────── */
+  .footer {
+    margin-top: 48px;
+    text-align: center;
+    font-size: 11px;
+    color: #2a2a2a;
+    padding: 0 16px;
+  }
+
+  /* ─── Responsive ─────────────────── */
+  @media (max-width: 480px) {
+    .header h1 { font-size: 22px; }
+    .card { padding: 14px 14px; gap: 12px; }
+    .card-icon { width: 36px; height: 36px; font-size: 17px; border-radius: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo-wrap">
+    <img src="resources/logo.png" alt="Heathrow Boxing Club" onerror="this.style.display='none';this.parentElement.innerHTML='🥊'">
+  </div>
+  <div class="gym-name">Heathrow Boxing Club</div>
+  <h1>Content Hub</h1>
+  <p class="tagline">West Drayton · Ukrainian-Style Boxing · Social Media System</p>
+</header>
+
+<div class="container">
+
+  <!-- ── CONTENT CALENDARS ──────────────────────────────── -->
+  <div class="section-title">Content Calendars</div>
+  <div class="card-list">
+
+    <a class="card" href="output/2026-04-08_content_calendar_week_apr13-19.html">
+      <div class="card-icon icon-calendar">🗓️</div>
+      <div class="card-body">
+        <div class="card-title">Week of April 13–19, 2026</div>
+        <div class="card-meta">Generated 2026-04-08 · 5 posts</div>
+        <div class="tag-row">
+          <span class="tag tag-calendar">Calendar</span>
+          <span class="tag tag-ig">IG</span>
+          <span class="tag tag-tt">TikTok</span>
+          <span class="tag tag-fb">FB</span>
+          <span class="tag tag-reel">4 Reels</span>
+          <span class="tag tag-carousel">1 Carousel</span>
+          <span class="tag tag-ua">🇺🇦 UA</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
+
+    <!-- ADD NEW CALENDARS ABOVE THIS LINE — copy the <a class="card"> block above -->
+
+  </div>
+
+  <!-- ── REEL IDEAS ─────────────────────────────────────── -->
+  <div class="section-title">Reel Ideas</div>
+  <div class="card-list">
+    <div class="empty">
+      <div class="empty-icon">🎬</div>
+      No reel idea files yet — ask "Generate 5 Instagram Reel ideas" to create one.
+    </div>
+  </div>
+
+  <!-- ── CAPTIONS ───────────────────────────────────────── -->
+  <div class="section-title">Captions</div>
+  <div class="card-list">
+    <div class="empty">
+      <div class="empty-icon">✍️</div>
+      No caption files yet — ask "Write captions for [clip description]" to create one.
+    </div>
+  </div>
+
+  <!-- ── PERFORMANCE & STRATEGY ─────────────────────────── -->
+  <div class="section-title">Performance & Strategy</div>
+  <div class="card-list">
+    <div class="empty">
+      <div class="empty-icon">📊</div>
+      No analysis files yet — share your post metrics to generate your first performance report.
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Heathrow Boxing Club · West Drayton · Content generated by AI workflow system
+</div>
+
+</body>
+</html>

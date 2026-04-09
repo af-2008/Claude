@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heathrow BC — Content Calendar Apr 13–19</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0d0d0d; color: #f0f0f0; line-height: 1.6; padding: 0 0 60px; }
+  .site-header { background: linear-gradient(160deg, #1a0a00 0%, #111 60%, #0d0d0d 100%); border-bottom: 2px solid #e63600; padding: 32px 20px 28px; text-align: center; }
+  .logo-wrap { width: 80px; height: 80px; border-radius: 50%; border: 3px solid #e63600; overflow: hidden; margin: 0 auto 14px; background: #1a1a1a; box-shadow: 0 0 24px rgba(230,54,0,0.25); }
+  .logo-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #444; text-decoration: none; margin-bottom: 16px; padding: 5px 12px; border: 1px solid #2a2a2a; border-radius: 20px; transition: color 0.15s, border-color 0.15s; }
+  .back-link:hover { color: #e63600; border-color: #e63600; }
+  .site-header .gym-name { font-size: 13px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: #e63600; margin-bottom: 6px; }
+  .site-header h1 { font-size: 24px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+  .site-header .meta { font-size: 12px; color: #555; margin-top: 8px; }
+  .week-grid { max-width: 780px; margin: 28px auto 0; padding: 0 16px; }
+  .week-grid h2 { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #666; margin-bottom: 14px; }
+  .week-table { width: 100%; border-collapse: collapse; font-size: 13px; border-radius: 10px; overflow: hidden; }
+  .week-table th { background: #1e1e1e; color: #888; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 12px; text-align: left; }
+  .week-table td { padding: 12px 12px; border-bottom: 1px solid #1e1e1e; background: #141414; vertical-align: top; }
+  .week-table tr:last-child td { border-bottom: none; }
+  .week-table .day { font-weight: 700; color: #fff; white-space: nowrap; }
+  .week-table .rest-day { color: #333; font-style: italic; }
+  .week-table .post-title { font-weight: 600; color: #f0f0f0; }
+  .week-table .post-subtitle { font-size: 11px; color: #555; margin-top: 2px; }
+  .week-table .time-badge { font-size: 11px; font-weight: 700; color: #e63600; white-space: nowrap; }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
+  .tag { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; }
+  .tag-ig { background: #2d1f47; color: #c77dff; }
+  .tag-tt { background: #1a2a2a; color: #69f0ae; }
+  .tag-fb { background: #1a2540; color: #64b5f6; }
+  .tag-reel { background: #2a1e0f; color: #ffa726; }
+  .tag-carousel { background: #1e2a1e; color: #81c784; }
+  .day-section { max-width: 780px; margin: 36px auto 0; padding: 0 16px; }
+  .day-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #222; flex-wrap: wrap; }
+  .day-label { font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: #e63600; background: rgba(230,54,0,0.08); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(230,54,0,0.2); }
+  .day-title { font-size: 18px; font-weight: 800; color: #fff; }
+  .day-time { margin-left: auto; font-size: 12px; color: #555; white-space: nowrap; }
+  .post-card { background: #141414; border: 1px solid #222; border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
+  .post-card-header { background: #1a1a1a; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .post-card-header .post-name { font-size: 15px; font-weight: 800; color: #fff; }
+  .post-card-body { padding: 18px; }
+  .section { margin-bottom: 20px; }
+  .section:last-child { margin-bottom: 0; }
+  .section-label { font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: #e63600; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid #1e1e1e; }
+  .filming-box { background: #0f1e0f; border: 1px solid #1a3a1a; border-left: 3px solid #4caf50; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #c8e6c9; }
+  .filming-box ol { padding-left: 18px; margin-top: 6px; }
+  .filming-box li { margin-bottom: 4px; }
+  .hook-list { display: flex; flex-direction: column; gap: 8px; }
+  .hook-item { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px; padding: 10px 14px; font-size: 13px; }
+  .hook-item .hook-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #888; margin-bottom: 4px; }
+  .hook-item .hook-text { font-size: 14px; font-weight: 700; color: #fff; }
+  .hook-item.recommended { border-color: #e63600; background: rgba(230,54,0,0.06); }
+  .hook-item.recommended .hook-label { color: #e63600; }
+  .recommended-badge { display: inline-block; font-size: 9px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; background: #e63600; color: #fff; padding: 2px 6px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
+  .caption-box { background: #111; border: 1px solid #222; border-radius: 8px; padding: 14px; font-size: 13px; line-height: 1.7; white-space: pre-wrap; word-break: break-word; }
+  .caption-platform-label { font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px; }
+  .caption-platform-label.ig { color: #c77dff; }
+  .caption-platform-label.tt { color: #69f0ae; }
+  .caption-platform-label.fb { color: #64b5f6; }
+  .caption-box .hashtags { color: #555; font-size: 12px; margin-top: 10px; }
+  .caption-box .cta-line { color: #e63600; font-weight: 700; }
+  .tiktok-extra { margin-top: 8px; background: #111; border: 1px solid #1a2a2a; border-radius: 6px; padding: 10px 12px; font-size: 12px; color: #aaa; }
+  .cta-pill { display: inline-block; background: rgba(230,54,0,0.15); border: 1px solid rgba(230,54,0,0.3); color: #e63600; font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 20px; margin-top: 4px; }
+  .ua-toggle { width: 100%; background: #0a1a0a; border: 1px solid #1a3a1a; border-radius: 8px; cursor: pointer; padding: 12px 16px; font-size: 13px; font-weight: 700; color: #81c784; text-align: left; display: flex; align-items: center; gap: 10px; margin-top: 16px; }
+  .ua-toggle:hover { background: #0d200d; }
+  .ua-toggle .arrow { margin-left: auto; transition: transform 0.2s; }
+  .ua-toggle.open .arrow { transform: rotate(180deg); }
+  .ua-block { display: none; background: #0a1a0a; border: 1px solid #1a3a1a; border-top: none; border-radius: 0 0 8px 8px; padding: 16px; font-size: 13px; line-height: 1.7; }
+  .ua-block.visible { display: block; }
+  .ua-block .ua-section { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #1a3a1a; }
+  .ua-block .ua-section:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .ua-label { font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: #4caf50; margin-bottom: 6px; }
+  .ua-caption { background: #061206; border: 1px solid #1a3a1a; border-radius: 6px; padding: 12px; font-size: 13px; line-height: 1.7; white-space: pre-wrap; word-break: break-word; color: #c8e6c9; }
+  .divider { max-width: 780px; margin: 32px auto; border: none; border-top: 1px solid #1e1e1e; }
+  .quick-ref { max-width: 780px; margin: 36px auto 0; padding: 0 16px; }
+  .quick-ref h2 { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #666; margin-bottom: 14px; }
+  .ref-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+  .ref-card { background: #141414; border: 1px solid #222; border-radius: 10px; padding: 14px; }
+  .ref-card .ref-day { font-size: 11px; color: #666; margin-bottom: 4px; }
+  .ref-card .ref-title { font-size: 13px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+  .ref-card .ref-hook { font-size: 12px; color: #aaa; font-style: italic; margin-bottom: 8px; line-height: 1.5; }
+  .ref-card .ref-cta { font-size: 11px; font-weight: 700; color: #e63600; }
+  .filming-note-small { font-size: 11px; color: #555; margin-top: 8px; }
+  @media (max-width: 600px) {
+    .site-header h1 { font-size: 20px; }
+    .day-title { font-size: 16px; }
+    .post-card-header { flex-direction: column; align-items: flex-start; }
+    .week-table { font-size: 12px; }
+    .week-table td, .week-table th { padding: 8px 8px; }
+    .day-time { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="back-link" href="../index.html">← Content Hub</a>
+  <div class="logo-wrap">
+    <img src="../resources/logo.png" alt="Heathrow Boxing Club" onerror="this.style.display='none';this.parentElement.innerHTML='🥊'">
+  </div>
+  <div class="gym-name">Heathrow Boxing Club</div>
+  <h1>Content Calendar — April 13–19, 2026</h1>
+  <div class="meta">Generated: 2026-04-08 &nbsp;·&nbsp; Workflows: 09 → 01 → 02 → 03 → 04 → 05 → 06 → 07 → 09</div>
+</header>
+
+
+<!-- ── WEEK OVERVIEW ──────────────────────────────────────── -->
+<section class="week-grid">
+  <h2>Weekly Overview</h2>
+  <table class="week-table">
+    <thead>
+      <tr><th>Day</th><th>Content</th><th>Platforms</th><th>Time</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="day">Mon 13</span></td>
+        <td><div class="post-title">Boxing vs Gym for Fat Loss</div><div class="post-subtitle">Reel — Controversy / Pattern Interrupt</div></td>
+        <td><div class="tags"><span class="tag tag-ig">IG</span><span class="tag tag-tt">TikTok</span><span class="tag tag-reel">Reel</span></div></td>
+        <td><span class="time-badge">6:30pm</span></td>
+      </tr>
+      <tr>
+        <td><span class="day">Tue 14</span></td>
+        <td><div class="post-title">Summer is 8 Weeks Away</div><div class="post-subtitle">Carousel — Transformation fear</div></td>
+        <td><div class="tags"><span class="tag tag-ig">IG</span><span class="tag tag-carousel">Carousel</span></div></td>
+        <td><span class="time-badge">6:00pm</span></td>
+      </tr>
+      <tr>
+        <td><span class="day">Wed 15</span></td>
+        <td><div class="post-title">5 Mistakes Beginners Make</div><div class="post-subtitle">Reel — Educational / Social Proof</div></td>
+        <td><div class="tags"><span class="tag tag-ig">IG</span><span class="tag tag-tt">TikTok</span><span class="tag tag-fb">Facebook</span><span class="tag tag-reel">Reel</span></div></td>
+        <td><span class="time-badge">7:00pm</span></td>
+      </tr>
+      <tr>
+        <td><span class="day">Thu 16</span></td>
+        <td colspan="3"><span class="rest-day">Rest day — no post</span></td>
+      </tr>
+      <tr>
+        <td><span class="day">Fri 17</span></td>
+        <td><div class="post-title">Day in the Life at Heathrow BC</div><div class="post-subtitle">Reel — POV / Identity</div></td>
+        <td><div class="tags"><span class="tag tag-ig">IG</span><span class="tag tag-tt">TikTok</span><span class="tag tag-reel">Reel</span></div></td>
+        <td><span class="time-badge">6:30pm</span></td>
+      </tr>
+      <tr>
+        <td><span class="day">Sat 18</span></td>
+        <td><div class="post-title">Ukrainian Boxing Technique</div><div class="post-subtitle">Reel — Technical / Curiosity Gap</div></td>
+        <td><div class="tags"><span class="tag tag-ig">IG</span><span class="tag tag-fb">Facebook</span><span class="tag tag-reel">Reel</span></div></td>
+        <td><span class="time-badge">10:00am</span></td>
+      </tr>
+      <tr>
+        <td><span class="day">Sun 19</span></td>
+        <td colspan="3"><span class="rest-day">Rest day — no post</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<hr class="divider">
+
+<!-- ══════════════════════════════════════════════════════════
+     MONDAY APRIL 13
+══════════════════════════════════════════════════════════════ -->
+<section class="day-section">
+  <div class="day-header">
+    <span class="day-label">Mon · Apr 13</span>
+    <h2 class="day-title">Boxing vs Gym for Fat Loss</h2>
+    <span class="day-time">Post at 6:30pm UK</span>
+  </div>
+
+  <div class="post-card">
+    <div class="post-card-header">
+      <span class="post-name">Boxing vs Gym for Fat Loss</span>
+      <div class="tags"><span class="tag tag-ig">Instagram</span><span class="tag tag-tt">TikTok</span><span class="tag tag-reel">Reel 30–45s</span></div>
+    </div>
+    <div class="post-card-body">
+
+      <div class="section">
+        <div class="section-label">📱 How to Film (iPhone · &lt;15 mins)</div>
+        <div class="filming-box">
+          Film 5 clips during a normal Monday session — no staging needed:
+          <ol>
+            <li>Bag work — close-up of gloves hitting heavy bag (5 sec)</li>
+            <li>Pad round — wide shot showing speed and intensity (5 sec)</li>
+            <li>Conditioning — burpees or skipping between rounds (5 sec)</li>
+            <li>Coach + member — coach correcting technique (5 sec)</li>
+            <li>End of session — members catching breath, smiling (5 sec)</li>
+          </ol>
+          Film vertical 9:16. Hand-held is fine. Keep natural gym audio.
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">⚡ Hook Options</div>
+        <div class="hook-list">
+          <div class="hook-item recommended">
+            <div class="hook-label">Hook A — Controversy <span class="recommended-badge">✓ USE THIS</span></div>
+            <div class="hook-text">"Stop going to the gym. Try this instead."</div>
+          </div>
+          <div class="hook-item">
+            <div class="hook-label">Hook B — Direct Address</div>
+            <div class="hook-text">"Still doing cardio and seeing zero results?"</div>
+          </div>
+          <div class="hook-item">
+            <div class="hook-label">Hook C — Transformation</div>
+            <div class="hook-text">"This burns more calories than an hour on the treadmill."</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">📸 Instagram Caption</div>
+        <div class="caption-platform-label ig">Instagram Reel</div>
+        <div class="caption-box">Stop going to the gym. Try this instead. 🥊
+
+Most people quit the gym because it's boring. You do the same 5 machines, stare at the same wall, go home feeling nothing. Boxing is different — every round is a problem to solve. Your brain is working as hard as your body.
+
+At Heathrow Boxing Club in West Drayton, we get complete beginners fit while teaching them real Ukrainian-style boxing. Not a fitness class. Actual boxing.
+
+Summer is 8 weeks away. Make those 8 weeks count.
+
+<span class="cta-line">DM us "TRAIN" to book your first class — first session is on us. 🔥</span>
+
+<span class="hashtags">#boxing #boxingtraining #boxingfitness #boxingworkout #boxingclub #padwork #hittingpads #boxinglife #boxingcommunity #weightloss #fatburn #fitness #getfit #transformation #gymmotivation #westdrayton #uxbridge #hayes #hillingdon #westlondon #londonboxing #londongyms #reels #reelsinstagram #fyp #gymreels #boxingtok</span></div>
+        <div class="filming-note-small">Cover frame: pad round — catch a clean combination mid-swing</div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">🎵 TikTok Version</div>
+        <div class="caption-platform-label tt">TikTok</div>
+        <div class="caption-box">Stop going to the gym. Do this instead 🥊 #boxing #boxingfitness #fyp #gymtok</div>
+        <div class="tiktok-extra">
+          <strong style="color:#69f0ae;">Text overlay (0:00–0:02):</strong> "STOP GOING TO THE GYM" — large white text, centre frame<br>
+          <strong style="color:#69f0ae;">Audio:</strong> Use a trending motivational beat with a drop around 3 seconds. Alternatively keep original gym audio (bags, pads) — works well for authenticity.
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">🎯 CTA</div>
+        <span class="cta-pill">DM "TRAIN" to book first class free</span>
+      </div>
+
+      <button class="ua-toggle" onclick="toggleUA(this)">
+        🇺🇦 Ukrainian Version — натисніть, щоб розгорнути
+        <span class="arrow">▼</span>
+      </button>
+      <div class="ua-block">
+        <div class="ua-section">
+          <div class="ua-label">Варіанти гаків</div>
+          <div class="ua-caption">Гак A (рекомендований): "Кинь ходити в зал. Спробуй це."
+Гак B: "Досі робиш кардіо і не бачиш результату?"
+Гак C: "Це спалює більше калорій, ніж година на біговій доріжці."</div>
+        </div>
+        <div class="ua-section">
+          <div class="ua-label">Instagram підпис</div>
+          <div class="ua-caption">Кинь ходити в зал. Спробуй це. 🥊
+
+Більшість людей кидають тренажерний зал, бо там нудно. Одні й ті ж тренажери, та сама стіна, і йдеш додому — ні заряду, ні задоволення. Бокс — зовсім інше. Кожен раунд — це нова задача. Голова працює не менше, ніж тіло.
+
+У Heathrow Boxing Club у Вест-Дрейтоні ми доводимо новачків до форми, навчаючи їх справжньому боксу в українському стилі. Не фітнес-заняття — справжній бокс.
+
+До літа залишилось 8 тижнів. Зроби їх корисними.
+
+<span class="cta-line">Напиши нам "TRAIN" і запишись на перше безкоштовне заняття. 🔥</span>
+
+#boxing #boxingtraining #боксклуб #бокс #westdrayton #uxbridge #londonboxing #westlondon #fatburn #weightloss</div>
+        </div>
+        <div class="ua-section">
+          <div class="ua-label">TikTok підпис</div>
+          <div class="ua-caption">Кинь ходити в зал. Роби це 🥊 #boxing #boxingfitness #fyp #gymtok</div>
+        </div>
+        <div class="ua-section">
+          <div class="ua-label">Текстовий оверлей (0:00–0:02)</div>
+          <div class="ua-caption">"КИНЬ ХОДИТИ В ЗАЛ" — великий білий текст по центру</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ══════════════════════════════════════════════════════════
+     TUESDAY APRIL 14
+══════════════════════════════════════════════════════════════ -->
+<section class="day-section">
+  <div class="day-header">
+    <span class="day-label">Tue · Apr 14</span>
+    <h2 class="day-title">Summer is 8 Weeks Away</h2>
+    <span class="day-time">Post at 6:00pm UK</span>
+  </div>
+
+  <div class="post-card">
+    <div class="post-card-header">
+      <span class="post-name">Summer is 8 Weeks Away — Start Now</span>
+      <div class="tags"><span class="tag tag-ig">Instagram</span><span class="tag tag-carousel">Carousel · 5 slides</span></div>
+    </div>
+    <div class="post-card-body">
+
+      <div class="section">
+        <div class="section-label">📱 How to Create (iPhone · &lt;10 mins)</div>
+        <div class="filming-box">
+          No video needed — this is a photo carousel. Take 4–5 photos during any session this week:
+          <ol>
+            <li>Action photo — pad work or bag work (high energy)</li>
+            <li>Technique shot — coach demonstrating, hands visible</li>
+            <li>Energy/sweat shot — effort and intensity clearly visible</li>
+            <li>Community shot — members together after a session</li>
+          </ol>
+          Use Instagram's built-in carousel editor or Canva: dark overlay on each photo, large white bold text overlay. Consistent style across all 5 slides.
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">📋 Slide Structure</div>
+        <div class="filming-box" style="background:#111; border-color:#2a2a2a; color:#ccc;">
+          <ol>
+            <li><strong style="color:#fff">Slide 1 (Hook):</strong> Most intense training photo · Text: "Summer is 8 weeks away." · Subtext: "What are you doing about it?"</li>
+            <li><strong style="color:#fff">Slide 2:</strong> Pad/bag action · Text: "The gym didn't work last year." · Subtext: "Same machines. Same boredom. Same results."</li>
+            <li><strong style="color:#fff">Slide 3:</strong> Coach + member · Text: "Boxing is different." · Subtext: "Every session is a challenge. Every week you're better."</li>
+            <li><strong style="color:#fff">Slide 4:</strong> After-session energy · Text: "Real boxing. Real results." · Subtext: "Heathrow Boxing Club — West Drayton"</li>
+            <li><strong style="color:#fff">Slide 5 (CTA):</strong> Dark background · Text: "First class free." · Subtext: "DM us 'SUMMER' to book yours."</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">📸 Instagram Caption</div>
+        <div class="caption-platform-label ig">Instagram Carousel</div>
+        <div class="caption-box">Eight weeks until summer. That's 8 weeks to actually do something different this year. 🎯
+
+The gym routine isn't working — we all know it. Same machines, same playlist, same "I'll go harder next week."
+
+Boxing gives you something the gym never will: a reason to come back. Every session is different. Every round you're faster, sharper, more capable than the last.
+
+At Heathrow Boxing Club in West Drayton, we take complete beginners and teach them real boxing — Ukrainian-style technique, proper coaching, genuine community.
+
+Eight weeks is enough.
+
+<span class="cta-line">DM us "SUMMER" to claim your free first class. 🥊</span>
+
+<span class="hashtags">#boxing #boxingfitness #boxingworkout #transformation #weightloss #getfit #fitness #gymmotivation #fitnessmotivation #bodygoals #westdrayton #uxbridge #hayes #westlondon #londonboxing #reels #explore</span></div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">🎯 CTA</div>
+        <span class="cta-pill">DM "SUMMER" to book first class free</span>
+      </div>
+
+      <button class="ua-toggle" onclick="toggleUA(this)">
+        🇺🇦 Ukrainian Version — натисніть, щоб розгорнути
+        <span class="arrow">▼</span>
+      </button>
+      <div class="ua-block">
+        <div class="ua-section">
+          <div class="ua-label">Текст слайдів (українська)</div>
+          <div class="ua-caption">Слайд 1: "До літа — 8 тижнів." / "Що ти з цим зробиш?"
+Слайд 2: "Зал минулого року не спрацював." / "Ті самі тренажери. Та сама нудьга. Ті самі результати."
+Слайд 3: "Бокс — це інакше." / "Кожне заняття — виклик. Щотижня ти стаєш кращим."
+Слайд 4: "Справжній бокс. Справжній результат." / "Heathrow Boxing Club — Вест-Дрейтон"
+Слайд 5: "Перше заняття — безкоштовно." / "Напиши нам 'SUMMER' і запишись."</div>
+        </div>
+        <div class="ua-section">
+          <div class="ua-label">Instagram підпис</div>
+          <div class="ua-caption">Вісім тижнів до літа. Це 8 тижнів, щоб нарешті зробити щось інакше. 🎯
+
+Тренування в залі не дають результату — ми всі це знаємо. Ті самі тренажери, той самий плейлист, те саме "наступного тижня постараюся більше."
+
+Бокс дає те, чого зал ніколи не дасть: причину повернутися. Кожне заняття — нове. Кожен раунд — ти швидший, чіткіший, сильніший, ніж минулого разу.
+
+У Heathrow Boxing Club у Вест-Дрейтоні ми беремо повних новачків і навчаємо їх справжньому боксу — техніка в українському стилі, грамотні тренери, справжня спільнота.
+
+Восьми тижнів достатньо.
+
+<span class="cta-line">Напиши нам "SUMMER" і отримай перше безкоштовне заняття. 🥊</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ══════════════════════════════════════════════════════════
+     WEDNESDAY APRIL 15
+══════════════════════════════════════════════════════════════ -->
+<section class="day-section">
+  <div class="day-header">
+    <span class="day-label">Wed · Apr 15</span>
+    <h2 class="day-title">5 Mistakes Beginners Make</h2>
+    <span class="day-time">Post at 7:00pm UK</span>
+  </div>
+
+  <div class="post-card">
+    <div class="post-card-header">
+      <span class="post-name">5 Mistakes Beginners Make in Their First Boxing Class</span>
+      <div class="tags"><span class="tag tag-ig">Instagram</span><span class="tag tag-tt">TikTok</span><span class="tag tag-fb">Facebook</span><span class="tag tag-reel">Reel 30–45s</span></div>
+    </div>
+    <div class="post-card-body">
+
+      <div class="section">
+        <div class="section-label">📱 How to Film (iPhone · &lt;15 mins)</div>
+        <div class="filming-box">
+          Ask the coach to demo each "mistake" — keep it light and slightly humorous. 5 clips, 3–4 seconds each:
+          <ol>
+            <li>Looking at own hands instead of the target (glancing down mid-combo)</li>
+            <li>Crossing feet when moving (over-stepping sideways)</li>
+            <li>Dropping the guard after every punch (hands falling after the jab)</li>
+            <li>Holding breath mid-combination (exaggerate — puff out cheeks)</li>
+            <li>Swinging too hard too early (wild, looping haymaker)</li>
+          </ol>
+          Film from waist up. Keep the energy light — the goal is relatability, not criticism.
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">⚡ Hook Options</div>
+        <div class="hook-list">
+          <div class="hook-item recommended">
+            <div class="hook-label">Hook A — Number / Social Proof <span class="recommended-badge">✓ USE THIS</span></div>
+            <div class="hook-text">"Every beginner does this. Every single one. 😅"</div>
+          </div>
+          <div class="hook-item">
+            <div class="hook-label">Hook B — Direct Address</div>
+            <div class="hook-text">"Walking into your first boxing class? Don't make these mistakes."</div>
+          </div>
+          <div class="hook-item">
+            <div class="hook-label">Hook C — Curiosity Gap</div>
+            <div class="hook-text">"The 5 things your boxing coach is watching for in your first session."</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">📸 Instagram Caption</div>
+        <div class="caption-platform-label ig">Instagram Reel</div>
+        <div class="caption-box">Every beginner does this. Every single one. 😅🥊
+
+5 mistakes we see in every first boxing class:
+
+1. Looking at your hands mid-combo
+2. Crossing your feet when moving
+3. Dropping your guard after every punch
+4. Holding your breath
+5. Trying to hit too hard too early
+
+The good news? Every one of these is fixed in the first few sessions. You don't need to be perfect to start. You just need to start.
+
+At Heathrow Boxing Club in West Drayton, we see these every week — and we love it. It means someone new is learning real boxing for the first time.
+
+<span class="cta-line">First class free. DM us "TRAIN" and come see which ones you do. 👊</span>
+
+<span class="hashtags">#boxing #boxingclass #boxingtraining #boxingcoach #boxingclub #boxingfitness #amateurboxing #boxingdrills #boxingskills #padwork #fitness #getfit #gymmotivation #martialarts #selfdefence #westdrayton #uxbridge #hayes #hillingdon #londonboxing #westlondon #londongyms #reels #reelsinstagram #fyp #viral #boxingtok #gymtok</span></div>
+        <div class="filming-note-small">Cover frame: the swinging haymaker — most visually funny, best scroll-stopper</div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">🎵 TikTok Version</div>
+        <div class="caption-platform-label tt">TikTok</div>
+        <div class="caption-box">Every beginner does this 😅 #boxing #boxingclass #fyp #boxingtok</div>
+        <div class="tiktok-extra">
+          <strong style="color:#69f0ae;">Text overlay (0:00–0:02):</strong> "5 mistakes every beginner makes in boxing" — white text, bottom third<br>
+          <strong style="color:#69f0ae;">Audio:</strong> Light, slightly comedic trending sound — something that fits quick cuts and a list format.
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">👥 Facebook Version</div>
+        <div class="caption-platform-label fb">Facebook</div>
+        <div class="caption-box">Starting boxing can feel intimidating — but here's the truth: every single person who walks through our door makes these same 5 mistakes in their first class.
+
+1. Looking at your hands mid-combination
+2. Crossing their feet when moving
+3. Dropping the guard after punching
+4. Holding their breath
+5. Swinging too hard before they've learned control
+
+And you know what? That's completely normal. We see it every week and we love it — it means someone new is learning real boxing for the first time.
+
+At Heathrow Boxing Club in West Drayton, we've helped complete beginners go from nervous first-timers to confident boxers. Whatever your age, background, or fitness level — you'll fit in here.
+
+<span class="cta-line">First class is free. Message us or drop in — we're in West Drayton, open 7 days. 📍</span>
+
+#boxing #boxingclub #westdrayton #uxbridge #londonboxing</div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">🎯 CTA</div>
+        <span class="cta-pill">DM "TRAIN" — first class free</span>
+      </div>
+
+      <button class="ua-toggle" onclick="toggleUA(this)">
+        🇺🇦 Ukrainian Version — натисніть, щоб розгорнути
+        <span class="arrow">▼</span>
+      </button>
+      <div class="ua-block">
+        <div class="ua-section">
+          <div class="ua-label">Варіанти гаків</div>
+          <div class="ua-caption">Гак A (рекомендований): "Кожен новачок це робить. Абсолютно кожен. 😅"
+Гак B: "Йдеш на перше заняття з боксу? Не роби цих помилок."
+Гак C: "5 речей, на які твій тренер звертає увагу з першого заняття."</div>
+        </div>
+        <div class="ua-section">
+          <div class="ua-label">Instagram підпис</div>
+          <div class="ua-caption">Кожен новачок це робить. Абсолютно кожен. 😅🥊
+
+5 помилок, які ми бачимо на кожному першому занятті:
+
+1. Дивишся на власні руки замість цілі
+2. Перехрещуєш ноги під час руху
+3. Опускаєш захист після кожного удару
+4. Затримуєш дихання
+5. Намагаєшся бити якомога сильніше з першого разу
+
+Гарна новина? Всі ці помилки виправляються за кілька занять. Не треба бути ідеальним, щоб почати. Треба просто почати.
+
+У Heathrow Boxing Club у Вест-Дрейтоні ми бачимо це щотижня — і раді цьому. Бо це означає, що хтось вперше вчиться справжньому боксу.
+
+<span class="cta-line">Перше заняття безкоштовно. Напиши нам "TRAIN" і приходь перевірити, які помилки робиш ти. 👊</span></div>
+        </div>
+        <div class="ua-section">
+          <div class="ua-label">TikTok підпис</div>
+          <div class="ua-caption">Кожен новачок це робить 😅 #boxing #boxingclass #fyp #boxingtok</div>
+        </div>
+        <div class="ua-section">
+          <div class="ua-label">Facebook підпис</div>
+          <div class="ua-caption">Починати займатися боксом може бути страшно — але правда ось у чому: кожен, хто переступає наш поріг, робить ці самі 5 помилок на першому занятті.
+
+1. Дивиться на руки замість цілі
+2. Перехрещує ноги під час руху
+3. Опускає захист після удару
+4. Затримує дихання
+5. Б'є надто сильно, ще не відпрацювавши техніку
+
+І знаєте що? Це абсолютно нормально. Ми бачимо це щотижня — і раді цьому. Бо це означає, що хтось новий вперше вчиться справжньому боксу.
+
+У Heathrow Boxing Club у Вест-Дрейтоні ми допомогли сотням новачків пройти шлях від нервових першопрохідців до впевнених боксерів. Незалежно від віку, досвіду чи рівня фізичної підготовки — тут тобі знайдеться місце.
+
+<span class="cta-line">Перше заняття безкоштовно. Напишіть нам або приходьте — ми у Вест-Дрейтоні, відкриті 7 днів на тиждень. 📍</span></div>
+        </div>
+        <div class="ua-section">
+          <div class="ua-label">Текстовий оверлей (0:00–0:02)</div>
+          <div class="ua-caption">"5 помилок кожного новачка в боксі" — білий текст, нижня третина екрану</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ══════════════════════════════════════════════════════════
+     FRIDAY APRIL 17
+══════════════════════════════════════════════════════════════ -->
+<section class="day-section">
+  <div class="day-header">
+    <span class="day-label">Fri · Apr 17</span>
+    <h2 class="day-title">Day in the Life at Heathrow BC</h2>
+    <span class="day-time">Post at 6:30pm UK</span>
+  </div>
+
+  <div class="post-card">
+    <div class="post-card-header">
+      <span class="post-name">Day in the Life at Heathrow Boxing Club</span>
+      <div class="tags"><span class="tag tag-ig">Instagram</span><span class="tag tag-tt">TikTok</span><span class="tag tag-reel">Reel 30–45s</span></div>
+    </div>
+    <div class="post-card-body">
+
+      <div class="section">
+        <div class="section-label">📱 How to Film (iPhone · &lt;10 mins)</div>
+        <div class="filming-box">
+          Easiest post of the week — just document what's already happening during a normal session:
+          <ol>
+            <li>Arrival — someone wrapping hands or putting gloves on</li>
+            <li>Warm-up — skipping or shadow boxing</li>
+            <li>Pad work — clean combination, close-up shot</li>
+            <li>Bag work — someone working the heavy bag hard</li>
+            <li>Coaching moment — coach correcting stance or technique</li>
+            <li>Conditioning — floor work, burpees, press-ups</li>
+            <li>End of session — members talking, smiling, catching breath</li>
+          </ol>
+          Film vertical, hand-held is fine. Add a punchy trending track in editing.
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">⚡ Hook Options</div>
+        <div class="hook-list">
+          <div class="hook-item recommended">
+            <div class="hook-label">Hook A — POV <span class="recommended-badge">✓ USE THIS</span></div>
+            <div class="hook-text">"A day at a real boxing gym in West London. 🥊"</div>
+          </div>
+          <div class="hook-item">
+            <div class="hook-label">Hook B — Identity</div>
+            <div class="hook-text">"This is what it looks like when you train at Heathrow Boxing Club."</div>
+          </div>
+          <div class="hook-item">
+            <div class="hook-label">Hook C — Curiosity</div>
+            <div class="hook-text">"What actually happens inside a Ukrainian boxing gym?"</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">📸 Instagram Caption</div>
+        <div class="caption-platform-label ig">Instagram Reel</div>
+        <div class="caption-box">This is what a session at Heathrow Boxing Club looks like. 🥊🔥
+
+Hands wrapped. Gloves on. Every round is earned.
+
+We're a real boxing gym in West Drayton — Ukrainian-style technique, proper coaches, people who take the sport seriously. Whether you're coming to get fit, learn to fight, or just try something completely different — you'll leave a different person.
+
+Come train with us. First class is free.
+
+<span class="cta-line">DM us "GYM" or drop in — West Drayton, open 7 days. 👊</span>
+
+<span class="hashtags">#boxing #boxinglife #boxingtraining #boxingclub #boxingcommunity #padwork #hittingpads #boxingcoach #boxingworkout #ukrainianboxing #fitness #fitlife #trainhard #gymmotivation #combatsports #westdrayton #uxbridge #hayes #westlondon #londonboxing #londongyms #reels #reelsinstagram #fyp #explore #gymreels</span></div>
+        <div class="filming-note-small">Cover frame: pad work clip — clean combination in frame, energy clearly visible</div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">🎵 TikTok Version</div>
+        <div class="caption-platform-label tt">TikTok</div>
+        <div class="caption-box">A day at our boxing gym in West London 🥊 #boxing #boxinglife #fyp #gymtok</div>
+        <div class="tiktok-extra">
+          <strong style="color:#69f0ae;">Text overlay (0:00–0:02):</strong> "A day at a real boxing gym" — white text, top or centre frame<br>
+          <strong style="color:#69f0ae;">Audio:</strong> Best post of the week for trending audio — pick an energetic track matching the pace of cuts. Check TikTok trending sounds under Sports/Fitness.
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">🎯 CTA</div>
+        <span class="cta-pill">DM "GYM" — first class free</span>
+      </div>
+
+      <button class="ua-toggle" onclick="toggleUA(this)">
+        🇺🇦 Ukrainian Version — натисніть, щоб розгорнути
+        <span class="arrow">▼</span>
+      </button>
+      <div class="ua-block">
+        <div class="ua-section">
+          <div class="ua-label">Варіанти гаків</div>
+          <div class="ua-caption">Гак A (рекомендований): "День у справжньому боксерському клубі в Лондоні. 🥊"
+Гак B: "Ось як виглядає тренування в Heathrow Boxing Club."
+Гак C: "Що насправді відбувається в боксерському залі в українському стилі?"</div>
+        </div>
+        <div class="ua-section">
+          <div class="ua-label">Instagram підпис</div>
+          <div class="ua-caption">Ось як виглядає заняття в Heathrow Boxing Club. 🥊🔥
+
+Руки забинтовані. Рукавиці надіті. Кожен раунд — заслужений.
+
+Ми — справжній боксерський клуб у Вест-Дрейтоні: техніка в українському стилі, грамотні тренери, люди, які серйозно ставляться до спорту. Неважливо, чи ти прийшов за формою, навчитися битися, чи просто спробувати щось зовсім нове — ти підеш іншою людиною.
+
+Приходь тренуватися. Перше заняття безкоштовно.
+
+<span class="cta-line">Напиши нам "GYM" або просто заходь — Вест-Дрейтон, відкриті 7 днів. 👊</span></div>
+        </div>
+        <div class="ua-section">
+          <div class="ua-label">TikTok підпис</div>
+          <div class="ua-caption">День у нашому боксерському клубі в Лондоні 🥊 #boxing #boxinglife #fyp #gymtok</div>
+        </div>
+        <div class="ua-section">
+          <div class="ua-label">Текстовий оверлей (0:00–0:02)</div>
+          <div class="ua-caption">"День у справжньому боксерському залі" — білий текст у верхній частині екрану</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ══════════════════════════════════════════════════════════
+     SATURDAY APRIL 18
+══════════════════════════════════════════════════════════════ -->
+<section class="day-section">
+  <div class="day-header">
+    <span class="day-label">Sat · Apr 18</span>
+    <h2 class="day-title">Ukrainian Boxing Technique</h2>
+    <span class="day-time">Post at 10:00am UK</span>
+  </div>
+
+  <div class="post-card">
+    <div class="post-card-header">
+      <span class="post-name">Ukrainian Boxing Technique Breakdown</span>
+      <div class="tags"><span class="tag tag-ig">Instagram</span><span class="tag tag-fb">Facebook</span><span class="tag tag-reel">Reel 30–45s</span></div>
+    </div>
+    <div class="post-card-body">
+
+      <div class="section">
+        <div class="section-label">📱 How to Film (iPhone · &lt;15 mins)</div>
+        <div class="filming-box">
+          Two parts — film in a quiet period or before a session:
+          <ol>
+            <li><strong>Coach to camera (Part 1):</strong> Standing in front of the ring, explains 1 key difference of Ukrainian-style boxing in plain English. Suggested topic: the tight defensive shell/high guard vs. standard upright stance. Film 30–45 seconds raw, edit to 15–20 seconds.</li>
+            <li><strong>Pad round demo (Part 2):</strong> Film the technique applied live — close-up on the guard position, then pull out for the full combination. 15–20 seconds of footage.</li>
+          </ol>
+          Edit: coach talking first → cut to live demo. Simple cut, no graphics needed.
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">⚡ Hook Options</div>
+        <div class="hook-list">
+          <div class="hook-item recommended">
+            <div class="hook-label">Hook A — Curiosity Gap <span class="recommended-badge">✓ USE THIS</span></div>
+            <div class="hook-text">"Most boxing gyms teach this. We don't. Here's why."</div>
+          </div>
+          <div class="hook-item">
+            <div class="hook-label">Hook B — Direct Address</div>
+            <div class="hook-text">"Want to know what makes Ukrainian boxing different?"</div>
+          </div>
+          <div class="hook-item">
+            <div class="hook-label">Hook C — Controversy</div>
+            <div class="hook-text">"The standard boxing guard has a problem. This fixes it."</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">📸 Instagram Caption</div>
+        <div class="caption-platform-label ig">Instagram Reel</div>
+        <div class="caption-box">Ukrainian boxing is different. Here's why it matters. 🎯
+
+Most boxing gyms teach the same upright stance. It looks clean. It works at beginner level. But when the punches come faster, the guard breaks down.
+
+Ukrainian-style boxing builds defensive structure first — a tight shell, movement from the hips, and combinations built around protection, not just attack.
+
+That's what we teach at Heathrow Boxing Club. Real technique, properly coached.
+
+Curious? Come see it in person — first class is free.
+
+<span class="cta-line">DM us "TECHNIQUE" to book. 🥊</span>
+
+<span class="hashtags">#boxing #boxingcoach #boxingtraining #ukrainianboxing #boxingskills #boxingtechnique #boxingdrills #amateurboxing #padwork #combatboxing #combatsports #martialarts #fighttraining #fitness #boxinglife #westdrayton #uxbridge #londonboxing #westlondon #reels #reelsinstagram #fyp #boxingtok</span></div>
+        <div class="filming-note-small">Cover frame: pad work demo — guard position clearly visible, coach in frame</div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">👥 Facebook Version</div>
+        <div class="caption-platform-label fb">Facebook</div>
+        <div class="caption-box">A lot of people ask us what makes Ukrainian-style boxing different from what you'd learn at most boxing clubs. Here's the honest answer.
+
+Most gyms teach a standard upright stance — it's fine for fitness boxing and beginner sparring. But it leaves you exposed when the pace increases.
+
+Ukrainian boxing prioritises defensive structure: a tighter shell, weight distribution that allows movement in any direction, and combinations that flow from a protected position rather than an open one.
+
+It's not flashy. It's disciplined, technical, and genuinely effective — which is exactly why our coaches teach it.
+
+If you're serious about learning real boxing in West Drayton, come in and try a class. We take complete beginners through to fighters preparing for bouts.
+
+<span class="cta-line">First class is always free. Message us or come down — open 7 days. 📍 Heathrow Boxing Club, West Drayton</span>
+
+#boxing #ukrainianboxing #boxingclub #westdrayton #uxbridge</div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">🎯 CTA</div>
+        <span class="cta-pill">DM "TECHNIQUE" — first class free</span>
+      </div>
+
+      <button class="ua-toggle" onclick="toggleUA(this)">
+        🇺🇦 Ukrainian Version — натисніть, щоб розгорнути
+        <span class="arrow">▼</span>
+      </button>
+      <div class="ua-block">
+        <div class="ua-section">
+          <div class="ua-label">Варіанти гаків</div>
+          <div class="ua-caption">Гак A (рекомендований): "Більшість залів вчать цього. Ми — ні. Ось чому."
+Гак B: "Хочеш знати, чим відрізняється бокс в українському стилі?"
+Гак C: "У стандартному боксерському захисті є проблема. Ось як її вирішують."</div>
+        </div>
+        <div class="ua-section">
+          <div class="ua-label">Instagram підпис</div>
+          <div class="ua-caption">Бокс в українському стилі — це інакше. І ось чому це важливо. 🎯
+
+Більшість боксерських залів навчає стандартній прямій стійці. Виглядає чисто. Для початківців підходить. Але коли удари стають швидшими — захист розвалюється.
+
+Бокс в українському стилі будується на захисній структурі перш за все: щільна "черепаха", рух від стегна, і серії, які починаються з захисту, а не навпаки.
+
+Саме це ми викладаємо в Heathrow Boxing Club. Справжня техніка, грамотно поставлена.
+
+Цікаво? Приходь подивитися особисто — перше заняття безкоштовно.
+
+<span class="cta-line">Напиши нам "TECHNIQUE" і запишись. 🥊</span></div>
+        </div>
+        <div class="ua-section">
+          <div class="ua-label">Facebook підпис</div>
+          <div class="ua-caption">Нас часто запитують, чим бокс в українському стилі відрізняється від того, чому навчають у більшості клубів. Відповідаємо чесно.
+
+Більшість залів навчає стандартній прямій стійці — вона підходить для фітнес-боксу і початкового спарингу. Але коли темп зростає, вона залишає вас відкритим.
+
+Бокс в українському стилі ставить захисну структуру на перше місце: щільна стійка, розподіл ваги, що дозволяє рухатися в будь-якому напрямку, і серії, що починаються із захисту, а не з відкритої позиції.
+
+Без показухи. Дисципліновано, технічно і справді ефективно — саме тому наші тренери так і навчають.
+
+Якщо ти серйозно хочеш навчитися справжньому боксу у Вест-Дрейтоні — приходь на пробне заняття. Ми приймаємо як повних новачків, так і тих, хто готується до боїв.
+
+<span class="cta-line">Перше заняття завжди безкоштовно. Напишіть або приходьте — відкриті 7 днів. 📍 Heathrow Boxing Club, Вест-Дрейтон</span></div>
+        </div>
+        <div class="ua-section">
+          <div class="ua-label">Текстовий оверлей</div>
+          <div class="ua-caption">"Більшість залів вчать цього. Ми — ні." — білий текст по центру</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ── QUICK REFERENCE ────────────────────────────────────── -->
+<hr class="divider">
+<section class="quick-ref">
+  <h2>Quick Reference — Week at a Glance</h2>
+  <div class="ref-grid">
+    <div class="ref-card">
+      <div class="ref-day">Mon 13 · 6:30pm · IG + TikTok</div>
+      <div class="ref-title">Boxing vs Gym</div>
+      <div class="ref-hook">"Stop going to the gym. Try this instead."</div>
+      <div class="ref-cta">DM "TRAIN"</div>
+    </div>
+    <div class="ref-card">
+      <div class="ref-day">Tue 14 · 6:00pm · IG Carousel</div>
+      <div class="ref-title">Summer in 8 Weeks</div>
+      <div class="ref-hook">"Summer is 8 weeks away. What are you doing about it?"</div>
+      <div class="ref-cta">DM "SUMMER"</div>
+    </div>
+    <div class="ref-card">
+      <div class="ref-day">Wed 15 · 7:00pm · IG + TikTok + FB</div>
+      <div class="ref-title">5 Beginner Mistakes</div>
+      <div class="ref-hook">"Every beginner does this. Every single one."</div>
+      <div class="ref-cta">DM "TRAIN"</div>
+    </div>
+    <div class="ref-card">
+      <div class="ref-day">Fri 17 · 6:30pm · IG + TikTok</div>
+      <div class="ref-title">Day in the Life</div>
+      <div class="ref-hook">"A day at a real boxing gym in West London."</div>
+      <div class="ref-cta">DM "GYM"</div>
+    </div>
+    <div class="ref-card">
+      <div class="ref-day">Sat 18 · 10:00am · IG + FB</div>
+      <div class="ref-title">Ukrainian Technique</div>
+      <div class="ref-hook">"Most boxing gyms teach this. We don't."</div>
+      <div class="ref-cta">DM "TECHNIQUE"</div>
+    </div>
+  </div>
+</section>
+
+
+<script>
+  function toggleUA(btn) {
+    btn.classList.toggle('open');
+    const block = btn.nextElementSibling;
+    block.classList.toggle('visible');
+  }
+</script>
+</body>
+</html>
